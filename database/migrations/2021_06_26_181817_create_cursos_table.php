@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateGruposTable extends Migration
+class CreateCursosTable extends Migration
 {
   /**
   * Run the migrations.
@@ -12,10 +12,9 @@ class CreateGruposTable extends Migration
   * @return void
   */
   public function up() {
-    Schema::create('grupos', function (Blueprint $table) {
+    Schema::create('cursos', function (Blueprint $table) {
       $table->id();
       $table->string('nombre')->unique();
-      $table->foreignId('curso_id')->references('id')->on('cursos')->cascadeOnUpdate()->nullOnDelete();
       $table->timestamps();
     });
   }
@@ -26,9 +25,6 @@ class CreateGruposTable extends Migration
   * @return void
   */
   public function down() {
-    Schema::table('cursos', function (Blueprint $table) {
-      $table->dropForeign(['curso_id']);
-    });
-    Schema::dropIfExists('grupos');
+    Schema::dropIfExists('cursos');
   }
 }

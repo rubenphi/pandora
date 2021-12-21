@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Cuestionario;
-use App\Http\Requests\CreateCuestionarioRequestRequest;
-use App\Http\Requests\UpdateCuestionarioRequest;
+use App\Models\Curso;
+use App\Http\Requests\CreateCursoRequest;
+use App\Http\Requests\UpdateCursoRequest;
 
-class CuestionarioController extends Controller
+class CursoController extends Controller
 {
   /**
   * Display a listing of the resource.
@@ -15,27 +15,15 @@ class CuestionarioController extends Controller
   * @return \Illuminate\Http\Response
   */
   public function index() {
-    $cuestionarios = Cuestionario::with('curso')->get();
-    return $cuestionarios;
-  }
-
-
-  public function cuestionariosByCurso(Request $request) {
-    $cuestionarios = Cuestionario::where('curso_id', $request->id)->get();
-    return $cuestionarios;
+    $cursos = Curso::all();
+    return $cursos;
   }
 
   /**
-  *
-  *
-
   * Show the form for creating a new resource.
   *
   * @return \Illuminate\Http\Response
   */
-  public function create() {
-    //
-  }
 
   /**
   * Store a newly created resource in storage.
@@ -43,14 +31,11 @@ class CuestionarioController extends Controller
   * @param  \Illuminate\Http\Request  $request
   * @return \Illuminate\Http\Response
   */
-  public function store(CreateCuestionarioRequest $request) {
-    $cuestionario = new Cuestionario();
-    $cuestionario->tema = $request->tema;
-    $cuestionario->fecha = $request->fecha;
-    $cuestionario->usuario_id = $request->usuario_id;
-    $cuestionario->curso_id = $request->curso_id;
+  public function store(CreateCursoRequest $request) {
+    $curso = new Curso();
+    $curso->nombre = $request->nombre;
 
-    $cuestionario->save();
+    $curso->save();
     return response()->json([
       'res' => true,
       'message' => 'Registro creado correctamente'
@@ -64,8 +49,8 @@ class CuestionarioController extends Controller
   * @return \Illuminate\Http\Response
   */
   public function show(Request $request) {
-    $cuestionario = Cuestionario::with('preguntas')->with('curso')->findOrFail($request->id);
-    return $cuestionario;
+    $curso = Curso::with('curso')->findOrFail($request->id);
+    return $curso;
   }
 
   /**
@@ -74,7 +59,6 @@ class CuestionarioController extends Controller
   * @param  int  $id
   * @return \Illuminate\Http\Response
   */
-  public function edit($id) {}
 
   /**
   * Update the specified resource in storage.
@@ -83,14 +67,12 @@ class CuestionarioController extends Controller
   * @param  int  $id
   * @return \Illuminate\Http\Response
   */
-  public function update(UpdateCuestionarioRequest $request) {
-    $cuestionario = Cuestionario::findOrFail($request->id);
-    $cuestionario->tema = $request->tema;
-    $cuestionario->fecha = $request->fecha;
-    $cuestionario->usuario_id = $request->usuario_id;
-    $cuestionario->curso_id = $request->curso_id;
+  public function update(UpdateCursoRequest $request) {
+    $curso = Curso::findOrFail($request->id);
+    $curso->nombre = $request->nombre;
 
-    $cuestionario->save();
+    $curso->save();
+
         return response()->json([
       'res' => true,
       'message' => 'Registro actualizado correctamente'
@@ -104,7 +86,7 @@ class CuestionarioController extends Controller
   * @return \Illuminate\Http\Response
   */
   public function destroy(Request $request) {
-    $cuestionario = Cuestionario::destroy($request->id);
+    $curso = Curso::destroy($request->id);
         return response()->json([
       'res' => true,
       'message' => 'Registro eliminado correctamente'

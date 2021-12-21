@@ -6,31 +6,44 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateUsersTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
-    {
-        Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
-            $table->timestamps();
-        });
-    }
+  /**
+  * Run the migrations.
+  *
+  * @return void
+  */
+  public function up() {
+    Schema::create('users', function (Blueprint $table) {
+      $table->id();
+      $table->string('name');
+      $table->string('rol');
+      $table->foreignId('curso_id')->references('id')->on('cursos')->cascadeOnUpdate()->nullOnDelete();
+      $table->foreignId('grupo_id')->references('id')->on('grupos')->cascadeOnUpdate()->nullOnDelete();
+      $table->string('email')->unique();
+      $table->timestamp('email_verified_at')->nullable();
+      $table->string('password');
+      $table->rememberToken();
+      $table->string('api_token')->nullable();
+      $table->timestamps();
+    });
+  }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::dropIfExists('users');
-    }
+  /**
+  * Reverse the migrations.
+  *
+  * @return void
+  */
+
+
+  public function down() {
+    
+      Schema::table('cursos', function (Blueprint $table) {
+    $table->dropForeign(['curso_id']);
+  });
+
+  Schema::table('grupos', function (Blueprint $table) {
+    $table->dropForeign(['grupo_id']);
+  });
+  
+    Schema::dropIfExists('users');
+  }
 }

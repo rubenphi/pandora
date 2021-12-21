@@ -7,11 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Cuestionario extends Model
 {
-    use HasFactory;
-    protected $fillable = ['tema', 'fecha','usuario_id'];
-
-		public function preguntas() 
-		{
-			return $this->hasMany(Pregunta::class);
-		}
+  use HasFactory;
+  protected $fillable = [
+    'tema',
+    'fecha',
+    'usuario_id',
+    'curso_id'
+  ];
+  public function curso() {
+    return $this->belongsTo(Curso::class, 'curso_id');
+  }
+  public function preguntas() {
+    return $this->hasMany(Pregunta::class);
+  }
 }
