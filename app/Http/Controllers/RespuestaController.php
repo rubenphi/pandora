@@ -10,6 +10,7 @@ use App\Models\Cuestionario;
 use App\Models\Opcion;
 use App\Http\Requests\CreateRespuestaRequest;
 use App\Http\Requests\UpdateRespuestaRequest;
+use App\Http\Traits\Traits;
 class RespuestaController extends Controller
 {
 
@@ -19,24 +20,48 @@ class RespuestaController extends Controller
   * @return \Illuminate\Http\Response
   */
   public function index() {
-    $respuestas = Respuesta::with('opcion')->with('pregunta')->with('grupo')->with('cuestionario')->get();
-    return $respuestas;
+    if (Traits::superadmin()) {
+      $respuestas = Respuesta::with('opcion')->with('pregunta')->with('grupo')->with('cuestionario')->get();
+      return $respuestas;
+    } else {
+      return Traits::error('Solo un administrador puede ver todas las respuestas', 400);
+    }
+
+
   }
 
   public function respuestasByCuestionario(Request $request) {
-    $respuestas = Respuesta::where('cuestionario_id', $request->id)->get();
-    return $respuestas;
+    $curso_id = Traits::verCurso($request->id, 'cuestionario');
+    if (Traits::curso($curso_id) || Traits::superadmin()) {
+      $respuestas = Respuesta::where('cuestionario_id', $request->id)->get();
+      return $respuestas;
+    } else {
+      return Traits::error('Si no es admin solo puede ver respuestas de su curso', 400);
+    }
+
+
   }
 
   public function respuestasByCuestionarioSum(Request $request) {
-    $respuestas = Respuesta::selectRaw('grupo_id, SUM(puntaje) as total')->where('cuestionario_id', $request->id)->with('grupo')->groupBy('grupo_id')->orderBy('total', 'desc')->get();
-    return $respuestas;
+    $curso_id = Traits::verCurso($request->id, 'cuestionario');
+    if (Traits::curso($curso_id) || Traits::superadmin()) {
+      $respuestas = Respuesta::selectRaw('grupo_id, SUM(puntaje) as total')->where('cuestionario_id', $request->id)->with('grupo')->groupBy('grupo_id')->orderBy('total', 'desc')->get();
+      return $respuestas;
+    } else {
+      return Traits::error('Si no es admin solo puede ver respuestas de su curso', 400);
+    }
   }
 
   public function respuestasByPregunta(Request $request) {
-    $respuestas = Respuesta::where('pregunta_id', $request->id)->with('opcion')->with('grupo')->orderBy('puntaje', 'desc')->orderBy('created_at', 'asc')->get();
-    return $respuestas;
+    $curso_id = Traits::verCurso($request->id, 'pregunta');
+    if (Traits::curso($curso_id) || Traits::superadmin()) {
+      $respuestas = Respuesta::where('pregunta_id', $request->id)->with('opcion')->with('grupo')->orderBy('puntaje', 'desc')->orderBy('created_at', 'asc')->get();
+      return $respuestas;
+    } else {
+      return Traits::error('Si no es admin solo puede ver respuestas de su curso', 400);
+    }
   }
+
   /**
 
 
@@ -47,33 +72,41 @@ class RespuestaController extends Controller
   * @return \Illuminate\Http\Response
   */
   public function store(CreateRespuestaRequest $request) {
-    Arr::set($request, 'grupoPregunta', $request->grupo_id . '-' . $request->pregunta_id);
-    $request->validate(['grupoPregunta' => ['unique:respuestas,grupoPregunta']]);
+    $curso_id = Traits::verCurso($request->pregunta_id, 'pregunta');
+    if (Traits::curso($curso_id) || Traits::superadmin()) {
+      Arr::set($request, 'grupoPregunta', $request->grupo_id . '-' . $request->pregunta_id);
+      $request->validate(['grupoPregunta' => ['unique:respuestas,grupoPregunta']]);
 
-    $respuesta = new respuesta();
-    $respuesta->cuestionario_id = Pregunta::findOrFail($request->pregunta_id)->cuestionario_id;
-    if ((Opcion::findOrFail($request->opcion_id)->correcto) == true) {
+      $respuesta = new respuesta();
+      $respuesta->cuestionario_id = Pregunta::findOrFail($request->pregunta_id)->cuestionario_id;
+      if ((Opcion::findOrFail($request->opcion_id)->correcto) == true) {
+        $respuesta->puntaje = Pregunta::findOrFail($request->pregunta_id)->valor;
+
+        if (!Respuesta::where('opcion_id', '=', $request->opcion_id)->exists()) {
+          $respuesta->puntaje = $respuesta->puntaje * 1.5;
+
+        };
+      } else {
+        $respuesta->puntaje = 0;
+      };
+      $respuesta->opcion_id = $request->opcion_id;
+      $respuesta->pregunta_id = $request->pregunta_id;
+      $respuesta->grupoPregunta = $request->grupoPregunta;
+      $respuesta->grupo_id = $request->grupo_id;
       $respuesta->puntaje = Pregunta::findOrFail($request->pregunta_id)->valor;
 
-      if (!Respuesta::where('opcion_id', '=', $request->opcion_id)->exists()) {
-        $respuesta->puntaje = $respuesta->puntaje * 1.5;
+      $respuesta->save();
 
-      };
+      return response()->json([
+        'res' => true,
+        'message' => 'Registro creado correctamente'
+      ], 200);
     } else {
-      $respuesta->puntaje = 0;
-    };
-    $respuesta->opcion_id = $request->opcion_id;
-    $respuesta->pregunta_id = $request->pregunta_id;
-    $respuesta->grupoPregunta = $request->grupoPregunta;
-    $respuesta->grupo_id = $request->grupo_id;
-    $respuesta->puntaje = Pregunta::findOrFail($request->pregunta_id)->valor;
+      return Traits::error('Si no es admin solo puede ver responder a preguntas de su curso', 400);
+    }
 
-    $respuesta->save();
 
-    return response()->json([
-      'res' => true,
-      'message' => 'Registro creado correctamente'
-    ], 200);
+
   }
 
   /**
@@ -84,18 +117,20 @@ class RespuestaController extends Controller
   */
   public function show(Request $request) {
     $respuesta = Respuesta::with('opcion')->with('pregunta')->with('grupo')->with('cuestionario')->findOrFail($request->id);
-    return $respuesta;
+
+    if (Traits::curso($respuesta->cuestionario->curso_id) || Traits::superadmin()) {
+      return $respuesta;
+    } else {
+      return Traits::error('Si no es admin solo puede ver responder a preguntas de su curso', 400);
+    }
+
+
   }
 
   /**
   * Show the form for editing the specified resource.
   *
-  * @param  int  $id
-  * @return \Illuminate\Http\Response
-  */
-  public function edit($id) {
-    //
-  }
+
 
   /**
   * Update the specified resource in storage.
@@ -105,15 +140,21 @@ class RespuestaController extends Controller
   * @return \Illuminate\Http\Response
   */
   public function update(UpdateRespuestaRequest $request) {
-    $respuesta = Respuesta::findOrFail($request->id);
-    $respuesta->opcion_id = $request->opcion_id;
-    $respuesta->puntaje = $request->puntaje;
+    if (Traits::superadmin()) {
+      $respuesta = Respuesta::findOrFail($request->id);
+      $respuesta->opcion_id = $request->opcion_id;
+      $respuesta->puntaje = $request->puntaje;
 
-    $respuesta->save();
-    return response()->json([
-      'res' => true,
-      'message' => 'Registro actualizado correctamente'
-    ], 200);
+      $respuesta->save();
+      return response()->json([
+        'res' => true,
+        'message' => 'Registro actualizado correctamente'
+      ], 200);
+    } else {
+      return Traits::error('Si no es admin no puede modificar una respuesta', 400);
+    }
+
+
   }
 
   /**
@@ -123,10 +164,16 @@ class RespuestaController extends Controller
   * @return \Illuminate\Http\Response
   */
   public function destroy(Request $request) {
-    $respuesta = Respuesta::destroy($request->id);
+    if (Traits::superadmin()) {
+      $respuesta = Respuesta::destroy($request->id);
     return response()->json([
       'res' => true,
       'message' => 'Registro eliminado correctamente'
     ], 200);
+    } else {
+      return Traits::error('Si no es admin no puede eliminar una respuesta', 400);
+    }
+    
+    
   }
 }

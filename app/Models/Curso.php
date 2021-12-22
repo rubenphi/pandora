@@ -12,7 +12,15 @@ class Curso extends Model
     'nombre'
   ];
 
-  public function cuestionario() {
-    return $this->belongsTo(Cuestionario::class, 'cuestionario_id');
+  public function cuestionarios() {
+    return $this->hasMany(Cuestionario::class);
   }
+  public function grupos() {
+    return $this->hasMany(Grupo::class);
+  }
+
+  public function integrantes() {
+    return $this->hasMany(User::class);
+  }
+
 }

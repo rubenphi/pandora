@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Curso;
 use App\Http\Requests\CreateCursoRequest;
 use App\Http\Requests\UpdateCursoRequest;
+use App\Http\Traits\Traits;
 
 class CursoController extends Controller
 {
@@ -15,8 +16,14 @@ class CursoController extends Controller
   * @return \Illuminate\Http\Response
   */
   public function index() {
-    $cursos = Curso::all();
-    return $cursos;
+    if (Traits::superadmin()) {
+      $cursos = Curso::all();
+      return $cursos;
+    } else {
+      return Traits::error('Solo un administrador puede ver todos los cursos', 400);
+    }
+
+
   }
 
   /**
@@ -32,14 +39,20 @@ class CursoController extends Controller
   * @return \Illuminate\Http\Response
   */
   public function store(CreateCursoRequest $request) {
-    $curso = new Curso();
-    $curso->nombre = $request->nombre;
+    if (Traits::superadmin()) {
+      $curso = new Curso();
+      $curso->nombre = $request->nombre;
 
-    $curso->save();
-    return response()->json([
-      'res' => true,
-      'message' => 'Registro creado correctamente'
-    ], 200);
+      $curso->save();
+      return response()->json([
+        'res' => true,
+        'message' => 'Registro creado correctamente'
+      ], 200);
+    } else {
+      return Traits::error('Solo el administrador puede crear cursos', 400);
+    }
+
+
   }
 
   /**
@@ -49,8 +62,14 @@ class CursoController extends Controller
   * @return \Illuminate\Http\Response
   */
   public function show(Request $request) {
-    $curso = Curso::with('curso')->findOrFail($request->id);
-    return $curso;
+    if (Traits::curso($request->id) || Traits::superadmin()) {
+      $curso = Curso::with('cuestionarios')->with('grupos')->with('integrantes')->findOrFail($request->id);
+      return $curso;
+    } else {
+      return Traits::error('Acceso denegado, no es administrador o no pertenece al curso', 400);
+    }
+
+
   }
 
   /**
@@ -68,15 +87,21 @@ class CursoController extends Controller
   * @return \Illuminate\Http\Response
   */
   public function update(UpdateCursoRequest $request) {
-    $curso = Curso::findOrFail($request->id);
-    $curso->nombre = $request->nombre;
+    if (Traits::superadmin()) {
+      $curso = Curso::findOrFail($request->id);
+      $curso->nombre = $request->nombre;
 
-    $curso->save();
+      $curso->save();
 
-        return response()->json([
-      'res' => true,
-      'message' => 'Registro actualizado correctamente'
-    ], 200);
+      return response()->json([
+        'res' => true,
+        'message' => 'Registro actualizado correctamente'
+      ], 200);
+    } else {
+      return Traits::error('Solo el administrador puede modificar cursos', 400);
+    }
+
+
   }
 
   /**
@@ -86,10 +111,17 @@ class CursoController extends Controller
   * @return \Illuminate\Http\Response
   */
   public function destroy(Request $request) {
-    $curso = Curso::destroy($request->id);
-        return response()->json([
-      'res' => true,
-      'message' => 'Registro eliminado correctamente'
-    ], 200);
+    if (Traits::superadmin()) {
+
+      $curso = Curso::destroy($request->id);
+      return response()->json([
+        'res' => true,
+        'message' => 'Registro eliminado correctamente'
+      ], 200);
+    } else {
+      return Traits::error('Solo el administrador puede eliminar cursos', 400);
+    }
+
+
   }
 }

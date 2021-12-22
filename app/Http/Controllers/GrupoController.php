@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Grupo;
 use App\Http\Requests\CreateGrupoRequest;
 use App\Http\Requests\UpdateGrupoRequest;
+use App\Http\Traits\Traits;
 
 class GrupoController extends Controller
 {
@@ -15,8 +16,13 @@ class GrupoController extends Controller
   * @return \Illuminate\Http\Response
   */
   public function index() {
-    $grupos = Grupo::with('curso')->get();
-    return $grupos;
+    if (Traits::superadmin()) {
+      $grupos = Grupo::with('curso')->get();
+      return $grupos;
+    } else {
+      return Traits::error('Solo un administrador puede ver todos los grupos', 400);
+    }
+
   }
 
   /**
@@ -24,8 +30,14 @@ class GrupoController extends Controller
   *
   * @return \Illuminate\Http\Response
   */
-  public function create() {
-    //
+  public function gruposByCurso(Request $request) {
+    if (Traits::curso($request->id) || Traits::superadmin()) {
+      $grupos = Grupo::where('curso_id', $request->id)->get();
+      return $grupos;
+    } else {
+      return Traits::error('Acceso denegado, no es administrador o no pertenece al curso', 400);
+    }
+
   }
 
   /**
@@ -35,16 +47,22 @@ class GrupoController extends Controller
   * @return \Illuminate\Http\Response
   */
   public function store(CreateGrupoRequest $request) {
-    $grupo = new Grupo();
-    $grupo->nombre = $request->nombre;
-    $grupo->curso_id = $request->curso_id;
+    if (Traits::superadmin()) {
+      $grupo = new Grupo();
+      $grupo->nombre = $request->nombre;
+      $grupo->curso_id = $request->curso_id;
 
 
-    $grupo->save();
-    return response()->json([
-      'res' => true,
-      'message' => 'Registro creado correctamente'
-    ], 200);
+      $grupo->save();
+      return response()->json([
+        'res' => true,
+        'message' => 'Registro creado correctamente'
+      ], 200);
+    } else {
+      return Traits::error('Solo un administrador puede crear grupos', 400);
+    }
+
+
   }
 
   /**
@@ -54,8 +72,14 @@ class GrupoController extends Controller
   * @return \Illuminate\Http\Response
   */
   public function show(Request $request) {
-    $grupo = Grupo::with('curso')->findOrFail($request->id);
-    return $grupo;
+    if (Traits::curso($request->id) || Traits::superadmin()) {
+      $grupo = Grupo::with('curso')->with('integrantes')->findOrFail($request->id);
+      return $grupo;
+    } else {
+      return Traits::error('Acceso denegado, no es administrador o no pertenece al curso', 400);
+    }
+
+
   }
 
   /**
@@ -76,17 +100,22 @@ class GrupoController extends Controller
   * @return \Illuminate\Http\Response
   */
   public function update(UpdateGrupoRequest $request) {
-    $grupo = Grupo::findOrFail($request->id);
-    $grupo->nombre = $request->nombre;
-    $grupo->curso_id = $request->curso_id;
+    if (Traits::superadmin()) {
+      $grupo = Grupo::findOrFail($request->id);
+      $grupo->nombre = $request->nombre;
+      $grupo->curso_id = $request->curso_id;
 
 
-    $grupo->save();
+      $grupo->save();
 
-    return response()->json([
-      'res' => true,
-      'message' => 'Registro actualizado correctamente'
-    ], 200);
+      return response()->json([
+        'res' => true,
+        'message' => 'Registro actualizado correctamente'
+      ], 200);
+    } else {
+      return Traits::error('Solo un administrador puede modificar grupos', 400);
+    }
+
   }
 
   /**
@@ -96,10 +125,16 @@ class GrupoController extends Controller
   * @return \Illuminate\Http\Response
   */
   public function destroy(Request $request) {
-    $grupo = Grupo::destroy($request->id);
+    if (Traits::superadmin()) {
+      $grupo = Grupo::destroy($request->id);
     return response()->json([
       'res' => true,
       'message' => 'Registro eliminado correctamente'
     ], 200);
+    } else {
+      return Traits::error('Solo un administrador puede eliminar grupos', 400);
+    }
+    
+    
   }
 }

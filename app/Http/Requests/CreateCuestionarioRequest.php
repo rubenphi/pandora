@@ -22,18 +22,16 @@ class CreateCuestionarioRequest extends FormRequest
   */
   public function rules() {
     return [
-      'nombre' => 'required',
+      'tema' => 'required',
       'fecha' => 'required',
-      'usuario_id' => 'required',
       'curso_id' => 'required'
     ];
   }
   
     public function messages() {
     return [
-      'nombre.required' => 'Debe ingresar un nombre',
+      'tema.required' => 'Debe ingresar un tema',
       'fecha.required' => 'Debe ingresar una fecha',
-      'usuario_id.required' => 'El cuestionario debe estar relacionado a un usuario',
       'curso_id.required' => 'El cuestionario debe estar asignado a un grupo'
     ];
   }

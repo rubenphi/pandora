@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Pregunta;
 use App\Http\Requests\CreatePreguntaRequest;
 use App\Http\Requests\UpdatePreguntaRequest;
+use App\Http\Traits\Traits;
 
 class PreguntaController extends Controller
 {
@@ -15,13 +16,26 @@ class PreguntaController extends Controller
   * @return \Illuminate\Http\Response
   */
   public function index() {
-    $preguntas = Pregunta::with('cuestionario')->get();
-    return $preguntas;
+    if (Traits::superadmin()) {
+      $preguntas = Pregunta::with('cuestionario')->get();
+      return $preguntas;
+    } else {
+      return Traits::error('Solo un administrador puede ver todas las preguntas', 400);
+    }
+
+
   }
 
   public function preguntasByCuestionario(Request $request) {
-    $preguntas = Pregunta::where('cuestionario_id', $request->id)->get();
-    return $preguntas;
+    $curso_id = Traits::verCurso($request->id, 'cuestionario');
+    if (Traits::curso($curso_id) || Traits::superadmin()) {
+      $preguntas = Pregunta::where('cuestionario_id', $request->id)->get();
+      return $preguntas;
+    } else {
+      return Traits::error('Si no es administrador no puede ver preguntas que no pertenecen a cuestionarios asignados a su curso', 400);
+    }
+
+
   }
 
 
@@ -30,9 +44,6 @@ class PreguntaController extends Controller
   *
   * @return \Illuminate\Http\Response
   */
-  public function create() {
-    //
-  }
 
   /**
   * Store a newly created resource in storage.
@@ -41,19 +52,25 @@ class PreguntaController extends Controller
   * @return \Illuminate\Http\Response
   */
   public function store(CreatePreguntaRequest $request) {
-    $pregunta = new Pregunta();
-    $pregunta->enunciado = $request->enunciado;
-    $pregunta->cuestionario_id = $request->cuestionario_id;
-    $pregunta->valor = $request->valor;
-    $pregunta->visible = $request->visible;
-    $pregunta->disponible = $request->disponible;
+    if (Traits::superadmin()) {
+      $pregunta = new Pregunta();
+      $pregunta->enunciado = $request->enunciado;
+      $pregunta->cuestionario_id = $request->cuestionario_id;
+      $pregunta->valor = $request->valor;
+      $pregunta->visible = $request->visible;
+      $pregunta->disponible = $request->disponible;
 
 
-    $pregunta->save();
-        return response()->json([
-      'res' => true,
-      'message' => 'Registro creado correctamente'
-    ], 200);
+      $pregunta->save();
+      return response()->json([
+        'res' => true,
+        'message' => 'Registro creado correctamente'
+      ], 200);
+    } else {
+      return Traits::error('Si no es administrador no puede crear preguntas', 400);
+    }
+
+
   }
 
   /**
@@ -63,8 +80,14 @@ class PreguntaController extends Controller
   * @return \Illuminate\Http\Response
   */
   public function show(Request $request) {
-    $pregunta = Pregunta::with('cuestionario')->with('opciones')->findOrFail($request->id);
-    return $pregunta;
+    $curso_id = Traits::verCurso($request->id, 'pregunta');
+    if (Traits::curso($curso_id) || Traits::superadmin()) {
+      $pregunta = Pregunta::with('cuestionario')->with('opciones')->findOrFail($request->id);
+      return $pregunta;
+    } else {
+      return Traits::error('Si no es administrador o esta pregunta no fue asignada a su curso no la puede ver', 400);
+    }
+
   }
 
   /**
@@ -85,19 +108,25 @@ class PreguntaController extends Controller
   * @return \Illuminate\Http\Response
   */
   public function update(UpdatePreguntaRequest $request) {
-    $pregunta = Pregunta::findOrFail($request->id);
-    $pregunta->enunciado = $request->enunciado;
-    $pregunta->cuestionario_id = $request->cuestionario_id;
-    $pregunta->valor = $request->valor;
-    $pregunta->visible = $request->visible;
-    $pregunta->disponible = $request->disponible;
+    if (Traits::superadmin()) {
+      $pregunta = Pregunta::findOrFail($request->id);
+      $pregunta->enunciado = $request->enunciado;
+      $pregunta->cuestionario_id = $request->cuestionario_id;
+      $pregunta->valor = $request->valor;
+      $pregunta->visible = $request->visible;
+      $pregunta->disponible = $request->disponible;
 
 
-    $pregunta->save();
-       return response()->json([
-      'res' => true,
-      'message' => 'Registro actualizado correctamente'
-    ], 200);
+      $pregunta->save();
+      return response()->json([
+        'res' => true,
+        'message' => 'Registro actualizado correctamente'
+      ], 200);
+    } else {
+      return Traits::error('Si no es administrador no puede modificar preguntas', 400);
+    }
+
+
   }
 
   /**
@@ -107,10 +136,16 @@ class PreguntaController extends Controller
   * @return \Illuminate\Http\Response
   */
   public function destroy(Request $request) {
-    $pregunta = Pregunta::destroy($request->id);
-       return response()->json([
-      'res' => true,
-      'message' => 'Registro eliminado correctamente'
-    ], 200);
+    if (Traits::superadmin()) {
+      $pregunta = Pregunta::destroy($request->id);
+      return response()->json([
+        'res' => true,
+        'message' => 'Registro eliminado correctamente'
+      ], 200);
+    } else {
+      return Traits::error('Si no es administrador no puede eliminar preguntas', 400);
+    }
+
+
   }
 }

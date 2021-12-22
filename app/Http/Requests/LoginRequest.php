@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateCuestionarioRequest extends FormRequest
+class LoginRequest extends FormRequest
 {
   /**
   * Determine if the user is authorized to make this request.
@@ -22,17 +22,16 @@ class UpdateCuestionarioRequest extends FormRequest
   */
   public function rules() {
     return [
-      'tema' => 'required',
-      'fecha' => 'required',
-      'curso_id' => 'required'
+      'name' => 'required',
+      'password' => 'required'
+
     ];
   }
-
+  
   public function messages() {
     return [
-      'tema.required' => 'Debe ingresar un tema del cuestionario',
-      'fecha.required' => 'Debe ingresar una fecha',
-      'curso_id.required' => 'El cuestionario debe estar asignado a un grupo'
+      'email.required' => 'Debe ingresar su nombre de usuario',
+      'password.required' => 'Debe ingresar la contraeña'
     ];
   }
 }

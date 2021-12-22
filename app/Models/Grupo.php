@@ -17,4 +17,8 @@ class Grupo extends Model
     return $this->belongsTo(Curso::class, 'curso_id');
   }
 
+  public function integrantes() {
+    return $this->hasMany(User::class);
+  }
+
 }

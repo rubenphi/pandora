@@ -22,14 +22,15 @@ class CreateCursoRequest extends FormRequest
   */
   public function rules() {
     return [
-      'nombre' => 'unique:cursos,nombre',
+      'nombre' => 'required|unique:cursos,nombre',
     ];
   }
-  
-    public function messages() {
+
+  public function messages() {
     return [
       'nombre.unique' => 'No puede haber dos cursos con el mismo nombre',
+      'nombre.required' => 'El curso debe tener un nombre o numero que lo identifique'
     ];
   }
-  
+
 }

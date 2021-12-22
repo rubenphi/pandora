@@ -8,6 +8,7 @@ use App\Http\Controllers\PreguntaController;
 use App\Http\Controllers\CuestionarioController;
 use App\Http\Controllers\OpcionController;
 use App\Http\Controllers\RespuestaController;
+use App\Http\Controllers\UserController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -23,10 +24,18 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
   return $request->user();
 });
 
+Route::post('/users', [UserController::class, 'store']); //crea un usuario
+Route::post('/users/login', [UserController::class, 'login']); //crea un usuario
 Route::group(['middleware' => 'auth:api'], function() {
+
+  Route::apiResource('users', 'App\Http\Controllers\UserController');
+  Route::get('/users', [UserController::class, 'index']); //muestra los usuarios
+  Route::get('/users/{id}', [UserController::class, 'show']); //muestra los usuarios
+  Route::put('/users/{id}', [UserController::class, 'store']); //muestra los usuarios
 
   Route::get('/grupos', [GrupoController::class, 'index']); //muestra todos los registros
   Route::get('/grupos/{id}', [GrupoController::class, 'show']); //muestra un los registro
+  Route::get('/grupos/curso/{id}', [GrupoController::class, 'gruposByCurso']); //muestra un los registro
   Route::post('/grupos', [GrupoController::class, 'store']); // crea un registro
   Route::put('/grupos/{id}', [GrupoController::class, 'update']); // actualiza un registro
   Route::delete('/grupos/{id}', [GrupoController::class, 'destroy']); //elimina un registro

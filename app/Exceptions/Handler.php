@@ -39,7 +39,7 @@ class Handler extends ExceptionHandler
 
   public function register() {
     $this->reportable(function (Throwable $e) {});
-    
+    /*
     $this->renderable(function (Throwable $exception) {
       if ($exception instanceof ModelNotFoundException) {
         return response()->json(["res" => false, "error" => "Error de modelo"], 400);
@@ -63,7 +63,7 @@ class Handler extends ExceptionHandler
 
 
       return parent::render($request, $exception);
-    });
+    });*/
 
 
   }

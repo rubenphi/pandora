@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Cuestionario;
-use App\Http\Requests\CreateCuestionarioRequestRequest;
+use App\Http\Requests\CreateCuestionarioRequest;
 use App\Http\Requests\UpdateCuestionarioRequest;
+use App\Http\Traits\Traits;
 
 class CuestionarioController extends Controller
 {
@@ -15,14 +16,25 @@ class CuestionarioController extends Controller
   * @return \Illuminate\Http\Response
   */
   public function index() {
-    $cuestionarios = Cuestionario::with('curso')->get();
-    return $cuestionarios;
+    if (Traits::superadmin()) {
+      $cuestionarios = Cuestionario::with('curso')->get();
+      return $cuestionarios;
+    } else {
+      return Traits::error('Acceso denegado, no es administrador', 400);
+    }
+
+
   }
 
 
   public function cuestionariosByCurso(Request $request) {
-    $cuestionarios = Cuestionario::where('curso_id', $request->id)->get();
-    return $cuestionarios;
+    if (Traits::curso($request->id) || Traits::superadmin()) {
+      $cuestionarios = Cuestionario::where('curso_id', $request->id)->get();
+      return $cuestionarios;
+    } else {
+      return Traits::error('Acceso denegado, no es administrador o no pertenece al curso', 400);
+    }
+
   }
 
   /**
@@ -44,17 +56,23 @@ class CuestionarioController extends Controller
   * @return \Illuminate\Http\Response
   */
   public function store(CreateCuestionarioRequest $request) {
-    $cuestionario = new Cuestionario();
-    $cuestionario->tema = $request->tema;
-    $cuestionario->fecha = $request->fecha;
-    $cuestionario->usuario_id = $request->usuario_id;
-    $cuestionario->curso_id = $request->curso_id;
 
-    $cuestionario->save();
-    return response()->json([
-      'res' => true,
-      'message' => 'Registro creado correctamente'
-    ], 200);
+    if (Traits::superadmin()) {
+      $cuestionario = new Cuestionario();
+      $cuestionario->tema = $request->tema;
+      $cuestionario->fecha = $request->fecha;
+      $cuestionario->usuario_id = auth()->user()->id;
+      $cuestionario->curso_id = $request->curso_id;
+
+      $cuestionario->save();
+      return response()->json([
+        'res' => true,
+        'message' => 'Registro creado correctamente'
+      ], 200);
+    } else {
+      return Traits::error('Solo pueden crear cuestionarios los profesores o el administrador', 400);
+    }
+
   }
 
   /**
@@ -64,8 +82,13 @@ class CuestionarioController extends Controller
   * @return \Illuminate\Http\Response
   */
   public function show(Request $request) {
-    $cuestionario = Cuestionario::with('preguntas')->with('curso')->findOrFail($request->id);
-    return $cuestionario;
+    if (Traits::curso($request->curso_id) || Traits::superadmin()) {
+      $cuestionario = Cuestionario::with('preguntas')->with('curso')->findOrFail($request->id);
+      return $cuestionario;
+    } else {
+      return Traits::error('Solo puedes ver este cuestionario si está asignado a tu curso o si eres administrador', 400);
+    }
+
   }
 
   /**
@@ -84,17 +107,23 @@ class CuestionarioController extends Controller
   * @return \Illuminate\Http\Response
   */
   public function update(UpdateCuestionarioRequest $request) {
-    $cuestionario = Cuestionario::findOrFail($request->id);
-    $cuestionario->tema = $request->tema;
-    $cuestionario->fecha = $request->fecha;
-    $cuestionario->usuario_id = $request->usuario_id;
-    $cuestionario->curso_id = $request->curso_id;
+    if (Traits::superadmin()) {
+      $cuestionario = Cuestionario::findOrFail($request->id);
+      $cuestionario->tema = $request->tema;
+      $cuestionario->fecha = $request->fecha;
+      $cuestionario->usuario_id = auth()->user()->id;
+      $cuestionario->curso_id = $request->curso_id;
 
-    $cuestionario->save();
-        return response()->json([
-      'res' => true,
-      'message' => 'Registro actualizado correctamente'
-    ], 200);
+      $cuestionario->save();
+      return response()->json([
+        'res' => true,
+        'message' => 'Registro actualizado correctamente'
+      ], 200);
+    } else {
+      return Traits::error('Solo los administradores o profesores pueden modificar los cuestionarios', 400);
+    }
+
+
   }
 
   /**
@@ -104,10 +133,16 @@ class CuestionarioController extends Controller
   * @return \Illuminate\Http\Response
   */
   public function destroy(Request $request) {
-    $cuestionario = Cuestionario::destroy($request->id);
-        return response()->json([
-      'res' => true,
-      'message' => 'Registro eliminado correctamente'
-    ], 200);
+    if (Traits::superadmin()) {
+      $cuestionario = Cuestionario::destroy($request->id);
+      return response()->json([
+        'res' => true,
+        'message' => 'Registro eliminado correctamente'
+      ], 200);
+    } else {
+      return Traits::error('Solo los administradores o profesores pueden eliminar cuestionarios', 400);
+    }
+
+
   }
 }
