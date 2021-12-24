@@ -21,7 +21,7 @@ class RespuestaSeeder extends Seeder
         'grupoPregunta' => '1-1',
         'puntaje' => 0,
         'cuestionario_id' => 1,
-        'created_at' => date('Y-m-d H:i:s.').gettimeofday()["usec"]+100
+        'created_at' => date('Y-m-d H:i:s')
       ],
       [
         'opcion_id' => 1,
@@ -30,7 +30,7 @@ class RespuestaSeeder extends Seeder
         'grupoPregunta' => '2-1',
         'puntaje' => 0,
         'cuestionario_id' => 1,
-        'created_at' => date('Y-m-d H:i:s.').gettimeofday()["usec"]
+        'created_at' => date('Y-m-d H:i:s')
       ],
       [
         'opcion_id' => 0,

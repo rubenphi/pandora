@@ -55,7 +55,7 @@ class RespuestaController extends Controller
   public function respuestasByPregunta(Request $request) {
     $curso_id = Traits::verCurso($request->id, 'pregunta');
     if (Traits::curso($curso_id) || Traits::superadmin()) {
-      $respuestas = Respuesta::where('pregunta_id', $request->id)->with('opcion')->with('grupo')->orderBy('puntaje', 'desc')->orderBy('created_at', 'asc')->get();
+      $respuestas = Respuesta::where('pregunta_id', $request->id)->with('opcion')->with('grupo')->orderBy('puntaje', 'desc')->orderBy('id', 'asc')->get();
       return $respuestas;
     } else {
       return Traits::error('Si no es admin solo puede ver respuestas de su curso', 400);
