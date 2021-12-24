@@ -19,6 +19,8 @@ class UserSeeder extends Seeder
       [
         'name' => 'Rubén Darío Villamil Zamora',
         'email' => 'rubenphii@gmail.com',
+        'curso_id' => 1,
+        'grupo_id' => 1,
         'password' => Hash::make('japon93'),
         'rol' => 'admin',
         'created_at' => date('Y-m-d H:i:s.').gettimeofday()["usec"]
