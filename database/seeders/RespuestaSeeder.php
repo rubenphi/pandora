@@ -33,7 +33,7 @@ class RespuestaSeeder extends Seeder
         'created_at' => date('Y-m-d H:i:s.').gettimeofday()["usec"]
       ],
       [
-        'opcion_id' => 0,
+        'opcion_id' => 1,
         'pregunta_id' => 1,
         'grupo_id' => 3,
         'grupoPregunta' => '3-2',
