@@ -34,7 +34,7 @@ class RespuestaSeeder extends Seeder
       ],
       [
         'opcion_id' => 0,
-        'pregunta_id' => 2,
+        'pregunta_id' => 1,
         'grupo_id' => 3,
         'grupoPregunta' => '3-2',
         'puntaje' => 8,
