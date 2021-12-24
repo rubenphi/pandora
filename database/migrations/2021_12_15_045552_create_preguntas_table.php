@@ -15,7 +15,7 @@ class CreatePreguntasTable extends Migration
     Schema::create('preguntas', function (Blueprint $table) {
       $table->id();
       $table->string('enunciado', 500);
-      $table->foreignId('cuestionario_id')->references('id')->on('cuestionarios')->cascadeOnUpdate()->nullOnDelete();
+      $table->foreignId('cuestionario_id')->nullable()->references('id')->on('cuestionarios')->cascadeOnUpdate()->nullOnDelete();
       $table->integer('valor');
       $table->boolean('visible');
       $table->boolean('disponible');

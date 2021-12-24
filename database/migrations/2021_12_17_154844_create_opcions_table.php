@@ -19,7 +19,7 @@ class CreateOpcionsTable extends Migration
       $table->string('letra');
       $table->string('letraPregunta');
       $table->string('correctoPregunta');
-      $table->foreignId('pregunta_id')->references('id')->on('preguntas')->cascadeOnUpdate()->nullOnDelete();
+      $table->foreignId('pregunta_id')->nullable()->references('id')->on('preguntas')->cascadeOnUpdate()->nullOnDelete();
       $table->timestamps();
     });
   }

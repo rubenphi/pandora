@@ -13,10 +13,10 @@ class CreateRespuestasTable extends Migration
   public function up() {
     Schema::create('respuestas', function (Blueprint $table) {
       $table->id();
-      $table->foreignId('pregunta_id')->references('id')->on('preguntas')->cascadeOnUpdate()->nullOnDelete();
-      $table->foreignId('grupo_id')->references('id')->on('grupos')->cascadeOnUpdate()->nullOnDelete();
-      $table->foreignId('opcion_id')->references('id')->on('opcions')->cascadeOnUpdate()->nullOnDelete();
-      $table->foreignId('cuestionario_id')->references('id')->on('cuestionarios')->cascadeOnUpdate()->nullOnDelete();
+      $table->foreignId('pregunta_id')->nullable()->references('id')->on('preguntas')->cascadeOnUpdate()->nullOnDelete();
+      $table->foreignId('grupo_id')->nullable()->references('id')->on('grupos')->cascadeOnUpdate()->nullOnDelete();
+      $table->foreignId('opcion_id')->nullable()->references('id')->on('opcions')->cascadeOnUpdate()->nullOnDelete();
+      $table->foreignId('cuestionario_id')->nullable()->references('id')->on('cuestionarios')->cascadeOnUpdate()->nullOnDelete();
       $table->integer('puntaje');
       $table->string('grupoPregunta');
       $table->timestamps(6);
