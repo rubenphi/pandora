@@ -55,7 +55,7 @@ class RespuestaController extends Controller
   public function respuestasByPregunta(Request $request) {
     $curso_id = Traits::verCurso($request->id, 'pregunta');
     if (Traits::curso($curso_id) || Traits::superadmin()) {
-      $respuestas = Respuesta::where('pregunta_id', $request->id)->with('opcion')->with('grupo')->orderBy('puntaje', 'desc')->orderBy('id', 'asc')->get();
+      $respuestas = Respuesta::where('pregunta_id', $request->id)->with('opcion')->with('grupo')->orderBy('puntaje', 'desc')->orderBy('created_at', 'asc')->get();
       return $respuestas;
     } else {
       return Traits::error('Si no es admin solo puede ver respuestas de su curso', 400);
@@ -166,14 +166,14 @@ class RespuestaController extends Controller
   public function destroy(Request $request) {
     if (Traits::superadmin()) {
       $respuesta = Respuesta::destroy($request->id);
-    return response()->json([
-      'res' => true,
-      'message' => 'Registro eliminado correctamente'
-    ], 200);
+      return response()->json([
+        'res' => true,
+        'message' => 'Registro eliminado correctamente'
+      ], 200);
     } else {
       return Traits::error('Si no es admin no puede eliminar una respuesta', 400);
     }
-    
-    
+
+
   }
 }

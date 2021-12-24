@@ -21,7 +21,7 @@ class RespuestaSeeder extends Seeder
         'grupoPregunta' => '1-1',
         'puntaje' => 0,
         'cuestionario_id' => 1,
-        'created_at' => date('Y-m-d H:i:s')
+        'created_at' => date('Y-m-d H:i:s.').gettimeofday()["usec"]+100
       ],
       [
         'opcion_id' => 1,
@@ -30,7 +30,7 @@ class RespuestaSeeder extends Seeder
         'grupoPregunta' => '2-1',
         'puntaje' => 0,
         'cuestionario_id' => 1,
-        'created_at' => date('Y-m-d H:i:s')
+        'created_at' => date('Y-m-d H:i:s.').gettimeofday()["usec"]
       ],
       [
         'opcion_id' => 0,
@@ -39,7 +39,7 @@ class RespuestaSeeder extends Seeder
         'grupoPregunta' => '3-2',
         'puntaje' => 8,
         'cuestionario_id' => 1,
-        'created_at' => strtotime('+3 second', strtotime(date('Y-m-d H:i:s.v')))
+        'created_at' => date('Y-m-d H:i:s.').gettimeofday()["usec"]
       ]
     ]);
   }
