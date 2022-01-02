@@ -36,7 +36,7 @@ class UserController extends Controller
   }
 
   public function logeduser() {
-    return Traits::loged();
+    return auth()->user();
 
   }
 
