@@ -29,7 +29,7 @@ class CuestionarioController extends Controller
 
   public function cuestionariosByCurso(Request $request) {
     if (Traits::curso($request->id) || Traits::superadmin()) {
-      $cuestionarios = Cuestionario::where('curso_id', $request->id)->get();
+      $cuestionarios = Cuestionario::where('curso_id', $request->id)->with('curso')->get();
       return $cuestionarios;
     } else {
       return Traits::error('Acceso denegado, no es administrador o no pertenece al curso', 400);
