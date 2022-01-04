@@ -39,6 +39,16 @@ class UserController extends Controller
     return auth()->user();
 
   }
+    
+  public function usersByGrupo(Request $request) {
+    if (Traits::curso($request->id) || Traits::superadmin()) {
+      $users = User::where('grupo_id', $request->id)->with('grupo')->get();
+      return $users;
+    } else {
+      return Traits::error('Acceso denegado, no es administrador o no pertenece al curso', 400);
+    }
+
+  }
 
   /**
   * Store a newly created resource in storage.
