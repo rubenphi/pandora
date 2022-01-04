@@ -30,9 +30,11 @@ Route::group(['middleware' => 'auth:api'], function() {
 
   Route::apiResource('users', 'App\Http\Controllers\UserController');
   Route::get('/users', [UserController::class, 'index']); //muestra los usuarios
-  Route::get('/users/{id}', [UserController::class, 'show']); //muestra los usuarios
-  Route::put('/users/{id}', [UserController::class, 'store']); //muestra los usuarios
-  Route::get('/user/loged', [UserController::class, 'logeduser']); //muestra usuario loggeado
+  Route::get('/users/{id}', [UserController::class, 'show']); //muestra el usuario
+  Route::put('/users/{id}', [UserController::class, 'store']); //actualiza el usuario
+  Route::get('/user/loged', [UserController::class, 'logeduser']); //muestra usuario loggeado 
+  Route::get('/user/grupo/{id}', [UserController::class, 'usersByGrupo']);
+    
 
   Route::get('/grupos', [GrupoController::class, 'index']); //muestra todos los registros
   Route::get('/grupos/{id}', [GrupoController::class, 'show']); //muestra un los registro
