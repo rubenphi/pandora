@@ -14,7 +14,7 @@ class CreatePreguntasTable extends Migration
   public function up() {
     Schema::create('preguntas', function (Blueprint $table) {
       $table->id();
-      $table->string('imagen')->nullable();
+      $table->string('photo')->nullable();
       $table->string('enunciado');
       $table->foreignId('cuestionario_id')->nullable()->references('id')->on('cuestionarios')->cascadeOnUpdate()->nullOnDelete();
       $table->integer('valor');
