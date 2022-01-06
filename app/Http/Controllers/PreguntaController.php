@@ -54,6 +54,9 @@ class PreguntaController extends Controller
   public function store(CreatePreguntaRequest $request) {
     if (Traits::superadmin()) {
       $pregunta = new Pregunta();
+        if($request->has('photo') & gettype($request->photo) == 'object'){
+                $pregunta->imagen = Traits::uploadPhoto($request->photo);
+            };
       $pregunta->enunciado = $request->enunciado;
       $pregunta->cuestionario_id = $request->cuestionario_id;
       $pregunta->valor = $request->valor;
