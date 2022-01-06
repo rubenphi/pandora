@@ -26,7 +26,7 @@ class PreguntaSeeder extends Seeder
       ],
       [
         'enunciado' => 'Hola mundo 2',
-        'photo'=> '';
+        'photo'=> '',
         'cuestionario_id' => 1,
         'valor' => 5,
         'visible' => true,
