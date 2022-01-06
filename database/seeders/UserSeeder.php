@@ -18,6 +18,7 @@ class UserSeeder extends Seeder
     DB::table('users')->insert([
       [
         'name' => 'Rubén Darío Villamil Zamora',
+        'code' => '001',
         'email' => 'rubenphii@gmail.com',
         'curso_id' => 1,
         'grupo_id' => 1,
