@@ -70,7 +70,7 @@ class UserController extends Controller
   }
 
   public function login(LoginRequest $request) {
-    $user = User::whereName($request->name)->first();
+    $user = User::whereCode($request->code)->first();
     if (!is_null($user) && Hash::check($request->password, $user->password)) {
       $user->tokens->each(function ($tok, $key) {
         $tok->revoke();
