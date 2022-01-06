@@ -10,6 +10,7 @@ class Pregunta extends Model
   use HasFactory;
   protected $fillable = [
     'enunciado',
+    'photo',
     'cuestionario_id',
     'valor',
     'visible',
