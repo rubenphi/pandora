@@ -17,6 +17,7 @@ class PreguntaSeeder extends Seeder
     DB::table('preguntas')->insert([
       [
         'enunciado' => 'Hola mundo',
+        'photo' => 'https://s1.significados.com/foto/897px-eugene-delacroix-le-28-juillet.-la-liberte-guidant-le-peuple_bg.jpg',
         'cuestionario_id' => 1,
         'valor' => 5,
         'visible' => true,
