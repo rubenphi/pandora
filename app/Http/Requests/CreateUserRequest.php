@@ -24,6 +24,7 @@ class CreateUserRequest extends FormRequest
     return [
       'name' => 'required|alpha_dash|unique:users,name',
       'password' => 'required',
+      'code' => 'required',
       'email' => 'unique:users,email'
     ];
   }
@@ -31,6 +32,7 @@ class CreateUserRequest extends FormRequest
   public function messages() {
     return [
       'name.required' => 'Debes poner un nombre de usuario',
+      'name.code' => 'El codig de usuario es requerido',
       'name.alpha_dash' => 'El nombre de usuario solo puede tener letras y números, sin espacios ni tildes',
       'name.unique' => 'El nombre de usuario ya fue tomado',
       'email.unique' => 'Ya existe un usuario registrado con ese correo',
