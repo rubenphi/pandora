@@ -29,6 +29,6 @@ class Respuesta extends Model
     return $this->belongsTo(Grupo::class, 'grupo_id');
   }
   public function cuestionario() {
-    return $this->belongsTo(cuestionario::class, 'cuestionario_id');
+    return $this->belongsTo(Cuestionario::class, 'cuestionario_id');
   }
 }
