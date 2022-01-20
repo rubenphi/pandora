@@ -133,17 +133,9 @@ class PreguntaController extends Controller
       $pregunta->enunciado = $request->enunciado;
       $pregunta->cuestionario_id = $request->cuestionario_id;
       $pregunta->valor = $request->valor;
-      if($request->visible === true || $request->visible === 1 || $request->visible === "true" || $request->visible === "1"){
-      $pregunta->visible = 1;
-    } else {
-      $pregunta->visible = 0;
-    };
-    
-    if($request->disponible == true || $request->disponible == 1 || $request->disponible == "true" || $request->disponible == "1" ){
-      $pregunta->disponible = 1;
-    } else {
-      $pregunta->disponible = 0;
-    };
+      $pregunta->disponible = $request->disponible;
+      $pregunta->visible = $request->visible;
+     
   
 
       $pregunta->save();
