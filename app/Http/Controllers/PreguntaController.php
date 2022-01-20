@@ -54,15 +54,15 @@ class PreguntaController extends Controller
   public function store(CreatePreguntaRequest $request) {
     if (Traits::superadmin()) {
     if($request->visible == true){
-      $request->visible = 1
+      $request->visible = 1;
     } else {
-      $request->visible = 0 
+      $request->visible = 0;
     };
     
     if($request->disponible == true){
-      $request->disponible = 1
+      $request->disponible = 1;
     } else {
-      $request->disponible = 0 
+      $request->disponible = 0;
     };
 
       }
@@ -126,15 +126,15 @@ class PreguntaController extends Controller
   public function update(UpdatePreguntaRequest $request) {
     if (Traits::superadmin()) {
        if($request->visible == true){
-      $request->visible = 1
+      $request->visible = 1;
     } else {
-      $request->visible = 0 
+      $request->visible = 0;
     };
     
     if($request->disponible == true){
-      $request->disponible = 1
+      $request->disponible = 1;
     } else {
-      $request->disponible = 0 
+      $request->disponible = 0;
     };
         
       $pregunta = Pregunta::findOrFail($request->id);
