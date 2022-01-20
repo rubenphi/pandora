@@ -65,7 +65,6 @@ class PreguntaController extends Controller
       $request->disponible = 0;
     };
 
-      }
       $pregunta = new Pregunta();
         if($request->has('photo') & gettype($request->photo) == 'object'){
                 $pregunta->photo = Traits::uploadPhoto($request->photo);
