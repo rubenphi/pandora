@@ -133,13 +133,13 @@ class PreguntaController extends Controller
       $pregunta->enunciado = $request->enunciado;
       $pregunta->cuestionario_id = $request->cuestionario_id;
       $pregunta->valor = $request->valor;
-      if($request->visible == true){
+      if($request->visible == false){
       $pregunta->visible = 1;
     } else {
       $pregunta->visible = 0;
     };
     
-    if($request->disponible == true){
+    if($request->disponible == false){
       $pregunta->disponible = 1;
     } else {
       $pregunta->disponible = 0;
