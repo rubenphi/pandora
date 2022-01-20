@@ -124,17 +124,7 @@ class PreguntaController extends Controller
   */
   public function update(UpdatePreguntaRequest $request) {
     if (Traits::superadmin()) {
-       if($request->visible == true){
-      $request->visible = 1;
-    } else {
-      $request->visible = 0;
-    };
-    
-    if($request->disponible == true){
-      $request->disponible = 1;
-    } else {
-      $request->disponible = 0;
-    };
+       
         
       $pregunta = Pregunta::findOrFail($request->id);
       if($request->has('photo') & gettype($request->photo) == 'object'){
@@ -143,14 +133,25 @@ class PreguntaController extends Controller
       $pregunta->enunciado = $request->enunciado;
       $pregunta->cuestionario_id = $request->cuestionario_id;
       $pregunta->valor = $request->valor;
-      $pregunta->visible = $request->visible;
-      $pregunta->disponible = $request->disponible;
-
+      if($request->visible == true){
+      $pregunta->visible = 1;
+    } else {
+      $pregunta->visible = 0;
+    };
+    
+    if($request->disponible == true){
+      $pregunta->disponible = 1;
+    } else {
+      $pregunta->disponible = 0;
+    };
+  
 
       $pregunta->save();
       return response()->json([
         'res' => true,
-        'message' => 'Registro actualizado correctamente'
+        'message' => 'Registro actualizado correctamente' 
+        'visible' => $pregunta->visible;
+        'visible' => $pregunta->disponible;
       ], 200);
     } else {
       return Traits::error('Si no es administrador no puede modificar preguntas', 400);
