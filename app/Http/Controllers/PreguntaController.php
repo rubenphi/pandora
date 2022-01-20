@@ -55,7 +55,7 @@ class PreguntaController extends Controller
     if (Traits::superadmin()) {
       $pregunta = new Pregunta();
         if($request->has('photo') & gettype($request->photo) == 'object'){
-                $pregunta->imagen = Traits::uploadPhoto($request->photo);
+                $pregunta->photo = Traits::uploadPhoto($request->photo);
             };
       $pregunta->enunciado = $request->enunciado;
       $pregunta->cuestionario_id = $request->cuestionario_id;
@@ -113,6 +113,9 @@ class PreguntaController extends Controller
   public function update(UpdatePreguntaRequest $request) {
     if (Traits::superadmin()) {
       $pregunta = Pregunta::findOrFail($request->id);
+      if($request->has('photo') & gettype($request->photo) == 'object'){
+                $pregunta->photo = Traits::uploadPhoto($request->photo);
+            };
       $pregunta->enunciado = $request->enunciado;
       $pregunta->cuestionario_id = $request->cuestionario_id;
       $pregunta->valor = $request->valor;
