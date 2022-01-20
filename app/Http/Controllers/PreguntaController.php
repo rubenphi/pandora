@@ -150,8 +150,8 @@ class PreguntaController extends Controller
       return response()->json([
         'res' => true,
         'message' => 'Registro actualizado correctamente' 
-        'visible' => $pregunta->visible;
-        'visible' => $pregunta->disponible;
+        'visible' => $pregunta->visible,
+        'visible' => $pregunta->disponible,
       ], 200);
     } else {
       return Traits::error('Si no es administrador no puede modificar preguntas', 400);
