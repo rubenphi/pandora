@@ -53,6 +53,23 @@ class PreguntaController extends Controller
   */
   public function store(CreatePreguntaRequest $request) {
     if (Traits::superadmin()) {
+    switch ($request->visible) {
+    case false:
+        $request->visible = 0;
+        break;
+    case true:
+        $request->visible = 1;
+        break;
+      }
+        
+      switch ($request->disponible) {
+    case false:
+        $request->disponible = 0;
+        break;
+    case true:
+        $request->disponible = 1;
+        break;
+      }
       $pregunta = new Pregunta();
         if($request->has('photo') & gettype($request->photo) == 'object'){
                 $pregunta->photo = Traits::uploadPhoto($request->photo);
@@ -112,6 +129,23 @@ class PreguntaController extends Controller
   */
   public function update(UpdatePreguntaRequest $request) {
     if (Traits::superadmin()) {
+      switch ($request->visible) {
+    case false:
+        $request->visible = 0;
+        break;
+    case true:
+        $request->visible = 1;
+        break;
+      }
+        
+      switch ($request->disponible) {
+    case false:
+        $request->disponible = 0;
+        break;
+    case true:
+        $request->disponible = 1;
+        break;
+      }
       $pregunta = Pregunta::findOrFail($request->id);
       if($request->has('photo') & gettype($request->photo) == 'object'){
                 $pregunta->photo = Traits::uploadPhoto($request->photo);
