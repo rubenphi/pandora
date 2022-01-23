@@ -61,6 +61,7 @@ class CuestionarioController extends Controller
       $cuestionario = new Cuestionario();
       $cuestionario->tema = $request->tema;
       $cuestionario->fecha = $request->fecha;
+      $cuestionario->existe = $request->existe;
       $cuestionario->usuario_id = auth()->user()->id;
       $cuestionario->curso_id = $request->curso_id;
 
@@ -110,6 +111,7 @@ class CuestionarioController extends Controller
     if (Traits::superadmin()) {
       $cuestionario = Cuestionario::findOrFail($request->id);
       $cuestionario->tema = $request->tema;
+      $cuestionario->existe = $request->existe;
       $cuestionario->fecha = $request->fecha;
       $cuestionario->usuario_id = auth()->user()->id;
       $cuestionario->curso_id = $request->curso_id;

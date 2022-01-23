@@ -60,6 +60,7 @@ class UserController extends Controller
     Arr::set($request, 'rol', 'estudiante');
 
     $input = $request->all();
+    $input['existe'] = $request->existe;
     $input['password'] = Hash::make($request->password);
 
     User::create($input);

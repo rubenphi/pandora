@@ -51,7 +51,7 @@ class GrupoController extends Controller
       $grupo = new Grupo();
       $grupo->nombre = $request->nombre;
       $grupo->curso_id = $request->curso_id;
-
+      $grupo->existe = $request->existe;
 
       $grupo->save();
       return response()->json([

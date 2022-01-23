@@ -42,7 +42,7 @@ class CursoController extends Controller
     if (Traits::superadmin()) {
       $curso = new Curso();
       $curso->nombre = $request->nombre;
-
+      $curso->existe = $request->existe;
       $curso->save();
       return response()->json([
         'res' => true,
@@ -90,7 +90,7 @@ class CursoController extends Controller
     if (Traits::superadmin()) {
       $curso = Curso::findOrFail($request->id);
       $curso->nombre = $request->nombre;
-
+      $curso->existe = $request->existe;
       $curso->save();
 
       return response()->json([
