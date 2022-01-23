@@ -32,7 +32,7 @@ class GrupoController extends Controller
   */
   public function gruposByCurso(Request $request) {
     if (Traits::curso($request->id) || Traits::superadmin()) {
-      $grupos = Grupo::where('curso_id', $request->id)->get();
+      $grupos = Grupo::where('curso_id', $request->id)->where('existe', 1)->get();
       return $grupos;
     } else {
       return Traits::error('Acceso denegado, no es administrador o no pertenece al curso', 400);

@@ -18,6 +18,7 @@ class CreateRespuestasTable extends Migration
       $table->foreignId('opcion_id')->nullable()->references('id')->on('opcions')->cascadeOnUpdate()->nullOnDelete();
       $table->foreignId('cuestionario_id')->nullable()->references('id')->on('cuestionarios')->cascadeOnUpdate()->nullOnDelete();
       $table->integer('puntaje');
+      $table->boolean('existe')->default(1);
       $table->string('grupoPregunta');
       $table->timestamps(6);
     });

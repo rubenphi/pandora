@@ -29,7 +29,7 @@ class PreguntaController extends Controller
   public function preguntasByCuestionario(Request $request) {
     $curso_id = Traits::verCurso($request->id, 'cuestionario');
     if (Traits::curso($curso_id) || Traits::superadmin()) {
-      $preguntas = Pregunta::where('cuestionario_id', $request->id)->get();
+      $preguntas = Pregunta::where('cuestionario_id', $request->id)->where('existe', 1)->get();
       return $preguntas;
     } else {
       return Traits::error('Si no es administrador no puede ver preguntas que no pertenecen a cuestionarios asignados a su curso', 400);
