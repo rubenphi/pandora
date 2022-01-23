@@ -13,7 +13,7 @@ class Existe extends Migration
      */
     public function up()
     {
-
+ 
         Schema::table('cursos', function (Blueprint $table) {
             $table->boolean('existe')->default(1)->after('nombre');
         });
