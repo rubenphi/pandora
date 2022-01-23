@@ -17,6 +17,7 @@ class CreateUsersTable extends Migration
       $table->string('name');
       $table->string('code')->unique;
       $table->string('rol');
+      $table->boolean('existe')->default(1);
       $table->foreignId('curso_id')->nullable()->references('id')->on('cursos')->cascadeOnUpdate()->nullOnDelete();
       $table->foreignId('grupo_id')->nullable()->references('id')->on('grupos')->cascadeOnUpdate()->nullOnDelete();
       $table->string('email')->unique();

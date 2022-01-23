@@ -15,6 +15,7 @@ class CreateGruposTable extends Migration
     Schema::create('grupos', function (Blueprint $table) {
       $table->id();
       $table->string('nombre')->unique();
+      $table->boolean('existe')->default(1);
       $table->foreignId('curso_id')->nullable()->references('id')->on('cursos')->cascadeOnUpdate()->nullOnDelete();
       $table->timestamps();
     });

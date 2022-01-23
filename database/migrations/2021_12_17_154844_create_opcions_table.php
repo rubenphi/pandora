@@ -18,6 +18,7 @@ class CreateOpcionsTable extends Migration
       $table->boolean('correcto');
       $table->string('letra');
       $table->string('letraPregunta');
+      $table->boolean('existe')->default(1);
       $table->string('correctoPregunta');
       $table->foreignId('pregunta_id')->nullable()->references('id')->on('preguntas')->cascadeOnUpdate()->nullOnDelete();
       $table->timestamps();
