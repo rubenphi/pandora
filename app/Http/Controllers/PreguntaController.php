@@ -71,7 +71,7 @@ class PreguntaController extends Controller
         } else {
         $pregunta->photo = $request->photo;
         };
-    
+      $pregunta->existe = $request->existe;
       $pregunta->enunciado = $request->enunciado;
       $pregunta->cuestionario_id = $request->cuestionario_id;
       $pregunta->valor = $request->valor;

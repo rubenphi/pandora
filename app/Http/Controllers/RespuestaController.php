@@ -62,10 +62,10 @@ class RespuestaController extends Controller
     }
   }
 
-  /**
 
 
-  /**
+
+  /*
   * Store a newly created resource in storage.
   *
   * @param  \Illuminate\Http\Request  $request
@@ -89,6 +89,7 @@ class RespuestaController extends Controller
       } else {
         $respuesta->puntaje = 0;
       };
+      $respuesta->existe = $request->existe;
       $respuesta->opcion_id = $request->opcion_id;
       $respuesta->pregunta_id = $request->pregunta_id;
       $respuesta->grupoPregunta = $request->grupoPregunta;

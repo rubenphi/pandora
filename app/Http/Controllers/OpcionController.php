@@ -54,6 +54,7 @@ class OpcionController extends Controller
       $request->validate(['letraPregunta' => ['unique:opcions,letraPregunta']], ['letraPregunta.unique' => 'Ya hay una opción de respuesta con esa letra o identificador']);
       $opcion->enunciado = $request->enunciado;
       $opcion->correcto = $request->correcto;
+      $opcion->existe = $request->existe;
       $opcion->letra = $request->letra;
       $opcion->pregunta_id = $request->pregunta_id;
       $opcion->letraPregunta = $request->letraPregunta;
