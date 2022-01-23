@@ -68,7 +68,10 @@ class PreguntaController extends Controller
       $pregunta = new Pregunta();
         if($request->has('photo') & gettype($request->photo) == 'object'){
                 $pregunta->photo = Traits::uploadPhoto($request->photo);
-            };
+        } else {
+        $pregunta->photo = $request->photo;
+        };
+    
       $pregunta->enunciado = $request->enunciado;
       $pregunta->cuestionario_id = $request->cuestionario_id;
       $pregunta->valor = $request->valor;
@@ -129,7 +132,9 @@ class PreguntaController extends Controller
       $pregunta = Pregunta::findOrFail($request->id);
       if($request->has('photo') & gettype($request->photo) == 'object'){
                 $pregunta->photo = Traits::uploadPhoto($request->photo);
-            };
+           } else {
+        $pregunta->photo = $request->photo;
+        };
       $pregunta->enunciado = $request->enunciado;
       $pregunta->cuestionario_id = $request->cuestionario_id;
       $pregunta->valor = $request->valor;
