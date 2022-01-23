@@ -17,7 +17,6 @@ class CreateCuestionariosTable extends Migration
       $table->string('tema', 100);
       $table->date('fecha');
       $table->integer('usuario_id')->nullable()->unsigned();
-      $table->boolean('existe')->default(1);
       $table->foreignId('curso_id')->nullable()->references('id')->on('cursos')->cascadeOnUpdate()->nullOnDelete();
       $table->timestamps();
     });

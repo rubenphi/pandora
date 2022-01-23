@@ -18,7 +18,6 @@ class CreatePreguntasTable extends Migration
       $table->longText('enunciado');
       $table->foreignId('cuestionario_id')->nullable()->references('id')->on('cuestionarios')->cascadeOnUpdate()->nullOnDelete();
       $table->integer('valor');
-      $table->boolean('existe')->default(1);
       $table->boolean('visible');
       $table->boolean('disponible');
       $table->timestamps();
