@@ -90,13 +90,13 @@ trait Traits
 
     $nameFile = time(). "." . $file->getClientOriginalExtension();
     $file->move(public_path('fotografias'), $nameFile);
-    return 'public/fotografias/'.$nameFile;
+    return 'fotografias/'.$nameFile;
   }
 
   public static function uploadDocument($file) {
 
     $nameFile = time(). "." . $file->getClientOriginalExtension();
     $file->move(public_path('documents'), $nameFile);
-    return 'public/documents/'.$nameFile;
+    return 'documents/'.$nameFile;
   }
 }
