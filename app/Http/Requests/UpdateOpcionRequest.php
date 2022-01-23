@@ -26,7 +26,7 @@ class UpdateOpcionRequest extends FormRequest
       'correcto' => 'required',
       'letra' => 'required',
       'pregunta_id' => 'required',
-      'letraPregunta' => 'unique'
+      'letraPregunta' => 'unique:opcions,letraPregunta,' . $this->route('id')
     ];
   }
   public function messages() {
