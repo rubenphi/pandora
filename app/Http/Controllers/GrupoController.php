@@ -104,6 +104,7 @@ class GrupoController extends Controller
       $grupo = Grupo::findOrFail($request->id);
       $grupo->nombre = $request->nombre;
       $grupo->curso_id = $request->curso_id;
+      $grupo->existe = $request->existe;
 
 
       $grupo->save();

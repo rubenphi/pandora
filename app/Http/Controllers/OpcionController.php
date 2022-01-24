@@ -121,6 +121,7 @@ class OpcionController extends Controller
       $opcion->enunciado = $request->enunciado;
       $opcion->correcto = $request->correcto;
       $opcion->letra = $request->letra;
+      $opcion->existe = $request->existe;
       $opcion->pregunta_id = $request->pregunta_id;
       $opcion->letraPregunta = $request->letraPregunta;
       $opcion->correctoPregunta = $request->correctoPregunta;

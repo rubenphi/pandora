@@ -145,7 +145,6 @@ class UserController extends Controller
     }
 
     if (Traits::mismo($user->id) || Traits::superadmin()) {
-
       $request["password"] = Hash::make($request->password);
       $user->update($request->all());
       return response()->json([

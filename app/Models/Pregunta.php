@@ -18,7 +18,7 @@ class Pregunta extends Model
   ];
 
   public function opciones() {
-    return $this->hasMany(Opcion::class)->orderBy('letra','asc');
+    return $this->hasMany(Opcion::class)->orderBy('letra','asc')->where('existe', '=' , 1);
   }
 
   public function cuestionario() {

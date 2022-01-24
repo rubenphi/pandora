@@ -133,7 +133,7 @@ class RespuestaController extends Controller
   *
 
 
-  /**
+  
   * Update the specified resource in storage.
   *
   * @param  \Illuminate\Http\Request  $request
@@ -145,7 +145,7 @@ class RespuestaController extends Controller
       $respuesta = Respuesta::findOrFail($request->id);
       $respuesta->opcion_id = $request->opcion_id;
       $respuesta->puntaje = $request->puntaje;
-
+      $respuesta->existe = $request->existe;
       $respuesta->save();
       return response()->json([
         'res' => true,
