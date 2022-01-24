@@ -22,6 +22,7 @@ class CreatePreguntaRequest extends FormRequest
   */
   public function rules() {
     return [
+      'titulo' => 'required',
       'enunciado' => 'required',
       'cuestionario_id' => 'required',
       'valor' => 'required',

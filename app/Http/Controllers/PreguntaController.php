@@ -73,7 +73,8 @@ class PreguntaController extends Controller
         };
       $pregunta->existe = $request->existe;
       $pregunta->enunciado = $request->enunciado;
-      $pregunta->cuestionario_id = $request->cuestionario_id;
+       $pregunta->titulo = $request->titulo;
+          $pregunta->cuestionario_id = $request->cuestionario_id;
       $pregunta->valor = $request->valor;
       $pregunta->visible = $request->visible;
       $pregunta->disponible = $request->disponible;
@@ -137,6 +138,8 @@ class PreguntaController extends Controller
         };
       $pregunta->existe = $request->existe;
       $pregunta->enunciado = $request->enunciado;
+    
+           $pregunta->titulo = $request->titulo;
       $pregunta->cuestionario_id = $request->cuestionario_id;
       $pregunta->valor = $request->valor;
       $pregunta->disponible = $request->disponible;
