@@ -18,6 +18,6 @@ class Cuestionario extends Model
     return $this->belongsTo(Curso::class, 'curso_id');
   }
   public function preguntas() {
-    return $this->hasMany(Pregunta::class);
+    return $this->hasMany(Pregunta::class)->where('existe', '=' ,1);
   }
 }
