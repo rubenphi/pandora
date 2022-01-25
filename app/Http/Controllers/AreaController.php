@@ -17,7 +17,7 @@ class AreaController extends Controller
     public function index() {
         if (Traits::superadmin()) {
           $areas = Area::all();
-          return $Areas;
+          return $areas;
         } else {
           return Traits::error('Solo un administrador puede ver todos los cursos', 400);
         }
