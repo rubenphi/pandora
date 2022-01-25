@@ -17,6 +17,11 @@ class Cuestionario extends Model
   public function curso() {
     return $this->belongsTo(Curso::class, 'curso_id');
   }
+
+  public function area() {
+    return $this->belongsTo(Area::class, 'area_id');
+  }
+
   public function preguntas() {
     return $this->hasMany(Pregunta::class)->where('existe', '=' ,1);
   }

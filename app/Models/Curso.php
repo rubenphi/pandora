@@ -23,4 +23,10 @@ class Curso extends Model
     return $this->hasMany(User::class);
   }
 
+  public function areas()
+{
+
+    return $this->belongsToMany(Area::class, 'area_cursos', 'curso_id', 'area_id');
+}
+
 }

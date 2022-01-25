@@ -17,7 +17,7 @@ class CuestionarioController extends Controller
   */
   public function index() {
     if (Traits::superadmin()) {
-      $cuestionarios = Cuestionario::with('curso')->get();
+      $cuestionarios = Cuestionario::with('curso')->with('area')->get();
       return $cuestionarios;
     } else {
       return Traits::error('Acceso denegado, no es administrador', 400);
@@ -29,13 +29,26 @@ class CuestionarioController extends Controller
 
   public function cuestionariosByCurso(Request $request) {
     if (Traits::curso($request->id) || Traits::superadmin()) {
-      $cuestionarios = Cuestionario::where('curso_id', $request->id)->where('existe', 1)->with('curso')->get();
+      $cuestionarios = Cuestionario::where('curso_id', $request->id)->where('existe', 1)->with('curso')->with('area')->get();
       return $cuestionarios;
     } else {
       return Traits::error('Acceso denegado, no es administrador o no pertenece al curso', 400);
     }
 
   }
+
+
+  public function cuestionariosByCursoAndArea(Request $request) {
+    if (Traits::curso($request->id) || Traits::superadmin()) {
+      $cuestionarios = Cuestionario::where('curso_id', $request->curso)->where('area_id', $request->area)->where('existe', 1)->with('curso')->with('area')->get();
+      return $cuestionarios;
+    } else {
+      return Traits::error('Acceso denegado, no es administrador o no pertenece al curso', 400);
+    }
+
+  }
+
+
 
   /**
   *
@@ -62,6 +75,7 @@ class CuestionarioController extends Controller
       $cuestionario->tema = $request->tema;
       $cuestionario->fecha = $request->fecha;
       $cuestionario->existe = $request->existe;
+      $cuestionario->area_id = $request->area_id;
       $cuestionario->usuario_id = auth()->user()->id;
       $cuestionario->curso_id = $request->curso_id;
 
@@ -84,7 +98,7 @@ class CuestionarioController extends Controller
   */
   public function show(Request $request) {
     if (Traits::curso($request->curso_id) || Traits::superadmin()) {
-      $cuestionario = Cuestionario::with('preguntas')->with('curso')->findOrFail($request->id);
+      $cuestionario = Cuestionario::with('preguntas')->with('curso')->with('area')->findOrFail($request->id);
       return $cuestionario;
     } else {
       return Traits::error('Solo puedes ver este cuestionario si está asignado a tu curso o si eres administrador', 400);
@@ -113,6 +127,7 @@ class CuestionarioController extends Controller
       $cuestionario->tema = $request->tema;
       $cuestionario->existe = $request->existe;
       $cuestionario->fecha = $request->fecha;
+      $cuestionario->area_id = $request->area_id;
       $cuestionario->usuario_id = auth()->user()->id;
       $cuestionario->curso_id = $request->curso_id;
 

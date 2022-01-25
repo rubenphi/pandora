@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AreaController;
 use App\Http\Controllers\GrupoController;
 use App\Http\Controllers\CursoController;
 use App\Http\Controllers\PreguntaController;
@@ -34,7 +35,12 @@ Route::group(['middleware' => 'auth:api'], function() {
   Route::put('/users/{id}', [UserController::class, 'store']); //actualiza el usuario
   Route::get('/user/loged', [UserController::class, 'logeduser']); //muestra usuario loggeado 
   Route::get('/user/grupo/{id}', [UserController::class, 'usersByGrupo']);
-    
+  
+  Route::get('/areas', [AreaController::class, 'index']); //muestra todos los registros
+  Route::get('/areas/{id}', [AreaController::class, 'show']); //muestra un los registro
+  Route::post('/areas', [AreaController::class, 'store']); // crea un registro
+  Route::put('/areas/{id}', [AreaController::class, 'update']); // actualiza un registro
+  Route::delete('/areas/{id}', [AreaController::class, 'destroy']); //elimina un registro
 
   Route::get('/grupos', [GrupoController::class, 'index']); //muestra todos los registros
   Route::get('/grupos/{id}', [GrupoController::class, 'show']); //muestra un los registro
@@ -48,6 +54,8 @@ Route::group(['middleware' => 'auth:api'], function() {
   Route::post('/cursos', [CursoController::class, 'store']); // crea un registro
   Route::put('/cursos/{id}', [CursoController::class, 'update']); // actualiza un registro
   Route::delete('/cursos/{id}', [CursoController::class, 'destroy']); //elimina un registro
+  Route::post('/cursos/add/area', [CursoController::class, 'addArea']); // crea un registro
+  Route::put('/cursos/update/area/{id}', [CursoController::class, 'updateArea']); // actualiza un registro
 
   Route::get('/preguntas', [PreguntaController::class, 'index']); //muestra todos los registros
   Route::get('/preguntas/{id}', [PreguntaController::class, 'show']); //muestra un los registro
@@ -59,6 +67,7 @@ Route::group(['middleware' => 'auth:api'], function() {
   Route::get('/cuestionarios', [CuestionarioController::class, 'index']); //muestra todos los registros
   Route::get('/cuestionarios/{id}', [CuestionarioController::class, 'show']); //muestra un los registro
   Route::get('/cuestionarios/curso/{id}', [CuestionarioController::class, 'cuestionariosByCurso']); //muestra un los registro
+  Route::get('/cuestionarios/curso/area/{curso}/{area}', [CuestionarioController::class, 'cuestionariosByCursoAndArea']); //muestra un los registro
   Route::post('/cuestionarios', [CuestionarioController::class, 'store']); // crea un registro
   Route::put('/cuestionarios/{id}', [CuestionarioController::class, 'update']); // actualiza un registro
   Route::delete('/cuestionarios/{id}', [CuestionarioController::class, 'destroy']); //elimina un registro

@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateCursoRequest extends FormRequest
+class ActualizaAreaRequest extends FormRequest
 {
   /**
   * Determine if the user is authorized to make this request.
@@ -22,14 +22,17 @@ class UpdateCursoRequest extends FormRequest
   */
   public function rules() {
     return [
-      'nombre' => 'required|unique:cursos,nombre,'. $this->route('id'),
+      'area_id' => 'required',
+      'curso_id' => 'required',
+      'area_curso' => 'unique:curso_area,area_curso,' . $this->route('id')
     ];
   }
 
   public function messages() {
     return [
-      'nombre.unique' => 'No puede haber dos cursos con el mismo nombre',
-      'nombre.required' => 'El curso debe tener un nombre o numero que lo identifique'
+      'area_id.required' => 'debe haber un area',
+      'curso_id.required' => 'debe haber un curso',
+      'area_curso.unique' => 'No se puede añadir dos veces el área a un curso'
     ];
   }
 
