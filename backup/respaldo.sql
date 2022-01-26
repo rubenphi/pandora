@@ -26,7 +26,7 @@ CREATE TABLE `area_cursos` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `curso_id` bigint unsigned DEFAULT NULL,
   `area_id` bigint unsigned DEFAULT NULL,
-  `area_curso` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `area_curso` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -56,7 +56,7 @@ DROP TABLE IF EXISTS `areas`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `areas` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nombre` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `existe` tinyint(1) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -83,7 +83,7 @@ DROP TABLE IF EXISTS `cuestionarios`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `cuestionarios` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `tema` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tema` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `fecha` date NOT NULL,
   `usuario_id` int unsigned DEFAULT NULL,
   `existe` tinyint(1) NOT NULL DEFAULT '1',
@@ -116,7 +116,7 @@ DROP TABLE IF EXISTS `cursos`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `cursos` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nombre` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `existe` tinyint(1) NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -144,11 +144,11 @@ DROP TABLE IF EXISTS `failed_jobs`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `failed_jobs` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `uuid` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uuid` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `connection` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `queue` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `exception` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`)
@@ -173,7 +173,7 @@ DROP TABLE IF EXISTS `grupos`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `grupos` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nombre` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `existe` tinyint(1) NOT NULL DEFAULT '1',
   `curso_id` bigint unsigned DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -204,7 +204,7 @@ DROP TABLE IF EXISTS `migrations`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `migrations` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `migration` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `migration` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -228,11 +228,11 @@ DROP TABLE IF EXISTS `oauth_access_tokens`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `oauth_access_tokens` (
-  `id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `user_id` bigint unsigned DEFAULT NULL,
   `client_id` bigint unsigned NOT NULL,
-  `name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `scopes` text COLLATE utf8mb4_unicode_ci,
+  `name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `scopes` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `revoked` tinyint(1) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -248,7 +248,7 @@ CREATE TABLE `oauth_access_tokens` (
 
 LOCK TABLES `oauth_access_tokens` WRITE;
 /*!40000 ALTER TABLE `oauth_access_tokens` DISABLE KEYS */;
-INSERT INTO `oauth_access_tokens` VALUES ('03c293d087b8c13c3abc9daa40cea7ff1d408b2a611777a978f6ddd1bfac811e3860bd3d66728502',1,3,'pandora','[]',1,'2022-01-24 16:17:46','2022-01-24 16:17:46','2023-01-24 11:17:46'),('15940072e9626b27140e648c51d7c5843cfeab5de9c8fdb214df7b95b8d89481672709f944aa535e',1,3,'pandora','[]',1,'2022-01-24 08:21:02','2022-01-24 08:21:02','2023-01-24 03:21:02'),('1a973b92f9d55a681c61fcfd2719eceab4b552c62ba29d9d25c88a177430234d11cd5523beb69ec5',1,3,'pandora','[]',1,'2022-01-24 17:17:00','2022-01-24 17:17:00','2023-01-24 12:17:00'),('4d6437364611956d41ccd66623a77541907940910ba8cb6a4d4263b28f179cd8cabc80ec017a17ce',1,3,'pandora','[]',1,'2022-01-25 06:33:05','2022-01-25 06:33:05','2023-01-25 01:33:05'),('4dd3825fafe13357d3e1c2bd2018abf943cdd947c492a396c7068436aabe5722fe1d35b9c51f9c0f',1,3,'pandora','[]',1,'2022-01-25 02:07:39','2022-01-25 02:07:39','2023-01-24 21:07:39'),('68fe1d98527a3a7d9ff472a7251fc90c2a6e4b3895d2d714cf609878355bd9fdde9d83ac4a7af5be',1,3,'pandora','[]',1,'2022-01-24 02:11:01','2022-01-24 02:11:01','2023-01-23 21:11:01'),('9d90093b8aebd57beae76d04c69917057bd2ef1e59a3119b2771b1ff95f5fae7de027f69b4ebe724',1,3,'pandora','[]',1,'2022-01-24 17:10:22','2022-01-24 17:10:22','2023-01-24 12:10:22'),('bd3c38aa4a4a74ab5f90bf1a3aad58bdab874c8e229c07ed7a4ca9c771fce521fa3338ba339cdd91',1,3,'pandora','[]',1,'2022-01-25 06:33:06','2022-01-25 06:33:06','2023-01-25 01:33:06'),('c446e010ffd73272b25f3cbb657e7ef5be6c45c5f3eba07a49e4ad5b2a577add282c315864588ccc',1,3,'pandora','[]',1,'2022-01-24 02:29:55','2022-01-24 02:29:55','2023-01-23 21:29:55'),('c5f95fef164639c049b2763e925831ba4d2abffc74f376056eabeb8bafdeaef868deece6e50ce7f7',1,3,'pandora','[]',1,'2022-01-24 08:10:49','2022-01-24 08:10:49','2023-01-24 03:10:49'),('cedc2884c308e2aba7ecb35a9f2285328c70a526b25ad0545a2beb4d2b2248e03cb8c52f1f7d0bce',1,3,'pandora','[]',1,'2022-01-24 17:12:08','2022-01-24 17:12:08','2023-01-24 12:12:08'),('e1d574b6346fb05c6b262130fc9f4bf7fbf1c175058ebe8596672d6bcdc81c0cf45b710b25ed4e25',1,3,'pandora','[]',0,'2022-01-25 09:27:46','2022-01-25 09:27:46','2023-01-25 04:27:46'),('e833009fef9c6d2b83f98331095d8969b58d8e71f73ab3a17f32fd8e9197684373b87df534ffd5fe',1,3,'pandora','[]',1,'2022-01-24 04:28:37','2022-01-24 04:28:37','2023-01-23 23:28:37'),('ed35f0edd85d75c6731baf3d1881421ce43202af86e15bfe1743ab0de4929780d0bb6feb6a8795a5',1,3,'pandora','[]',1,'2022-01-23 23:15:55','2022-01-23 23:15:55','2023-01-23 18:15:55'),('fcbc19661228e15ae19bf1aa566b41fc8abb9fff314c619fe6027705ed8b4b95499b9600aa9a1f6c',1,3,'pandora','[]',1,'2022-01-24 22:21:05','2022-01-24 22:21:05','2023-01-24 17:21:05'),('ffcee6ded6ed4331620a17de04f0eca9e6a6e16fa2884f6f1c149dde98ed342755ea66a36e4c53f2',1,3,'pandora','[]',1,'2022-01-24 08:25:11','2022-01-24 08:25:11','2023-01-24 03:25:11');
+INSERT INTO `oauth_access_tokens` VALUES ('03c293d087b8c13c3abc9daa40cea7ff1d408b2a611777a978f6ddd1bfac811e3860bd3d66728502',1,3,'pandora','[]',1,'2022-01-24 16:17:46','2022-01-24 16:17:46','2023-01-24 11:17:46'),('15940072e9626b27140e648c51d7c5843cfeab5de9c8fdb214df7b95b8d89481672709f944aa535e',1,3,'pandora','[]',1,'2022-01-24 08:21:02','2022-01-24 08:21:02','2023-01-24 03:21:02'),('1a973b92f9d55a681c61fcfd2719eceab4b552c62ba29d9d25c88a177430234d11cd5523beb69ec5',1,3,'pandora','[]',1,'2022-01-24 17:17:00','2022-01-24 17:17:00','2023-01-24 12:17:00'),('34b749bbca639390bce12ee62b2ac7f52f65e62b3ad61b70d40081150dfe3293393c0ef8b1841f16',1,3,'pandora','[]',0,'2022-01-27 04:15:00','2022-01-27 04:15:00','2023-01-26 23:15:00'),('4d6437364611956d41ccd66623a77541907940910ba8cb6a4d4263b28f179cd8cabc80ec017a17ce',1,3,'pandora','[]',1,'2022-01-25 06:33:05','2022-01-25 06:33:05','2023-01-25 01:33:05'),('4dd3825fafe13357d3e1c2bd2018abf943cdd947c492a396c7068436aabe5722fe1d35b9c51f9c0f',1,3,'pandora','[]',1,'2022-01-25 02:07:39','2022-01-25 02:07:39','2023-01-24 21:07:39'),('68fe1d98527a3a7d9ff472a7251fc90c2a6e4b3895d2d714cf609878355bd9fdde9d83ac4a7af5be',1,3,'pandora','[]',1,'2022-01-24 02:11:01','2022-01-24 02:11:01','2023-01-23 21:11:01'),('9d90093b8aebd57beae76d04c69917057bd2ef1e59a3119b2771b1ff95f5fae7de027f69b4ebe724',1,3,'pandora','[]',1,'2022-01-24 17:10:22','2022-01-24 17:10:22','2023-01-24 12:10:22'),('bd3c38aa4a4a74ab5f90bf1a3aad58bdab874c8e229c07ed7a4ca9c771fce521fa3338ba339cdd91',1,3,'pandora','[]',1,'2022-01-25 06:33:06','2022-01-25 06:33:06','2023-01-25 01:33:06'),('c446e010ffd73272b25f3cbb657e7ef5be6c45c5f3eba07a49e4ad5b2a577add282c315864588ccc',1,3,'pandora','[]',1,'2022-01-24 02:29:55','2022-01-24 02:29:55','2023-01-23 21:29:55'),('c5f95fef164639c049b2763e925831ba4d2abffc74f376056eabeb8bafdeaef868deece6e50ce7f7',1,3,'pandora','[]',1,'2022-01-24 08:10:49','2022-01-24 08:10:49','2023-01-24 03:10:49'),('cedc2884c308e2aba7ecb35a9f2285328c70a526b25ad0545a2beb4d2b2248e03cb8c52f1f7d0bce',1,3,'pandora','[]',1,'2022-01-24 17:12:08','2022-01-24 17:12:08','2023-01-24 12:12:08'),('e1d574b6346fb05c6b262130fc9f4bf7fbf1c175058ebe8596672d6bcdc81c0cf45b710b25ed4e25',1,3,'pandora','[]',1,'2022-01-25 09:27:46','2022-01-25 09:27:46','2023-01-25 04:27:46'),('e833009fef9c6d2b83f98331095d8969b58d8e71f73ab3a17f32fd8e9197684373b87df534ffd5fe',1,3,'pandora','[]',1,'2022-01-24 04:28:37','2022-01-24 04:28:37','2023-01-23 23:28:37'),('ed35f0edd85d75c6731baf3d1881421ce43202af86e15bfe1743ab0de4929780d0bb6feb6a8795a5',1,3,'pandora','[]',1,'2022-01-23 23:15:55','2022-01-23 23:15:55','2023-01-23 18:15:55'),('fcbc19661228e15ae19bf1aa566b41fc8abb9fff314c619fe6027705ed8b4b95499b9600aa9a1f6c',1,3,'pandora','[]',1,'2022-01-24 22:21:05','2022-01-24 22:21:05','2023-01-24 17:21:05'),('ffcee6ded6ed4331620a17de04f0eca9e6a6e16fa2884f6f1c149dde98ed342755ea66a36e4c53f2',1,3,'pandora','[]',1,'2022-01-24 08:25:11','2022-01-24 08:25:11','2023-01-24 03:25:11');
 /*!40000 ALTER TABLE `oauth_access_tokens` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -260,10 +260,10 @@ DROP TABLE IF EXISTS `oauth_auth_codes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `oauth_auth_codes` (
-  `id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `user_id` bigint unsigned NOT NULL,
   `client_id` bigint unsigned NOT NULL,
-  `scopes` text COLLATE utf8mb4_unicode_ci,
+  `scopes` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `revoked` tinyint(1) NOT NULL,
   `expires_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -290,10 +290,10 @@ DROP TABLE IF EXISTS `oauth_clients`;
 CREATE TABLE `oauth_clients` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `user_id` bigint unsigned DEFAULT NULL,
-  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `secret` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `provider` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `redirect` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `secret` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `provider` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `redirect` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `personal_access_client` tinyint(1) NOT NULL,
   `password_client` tinyint(1) NOT NULL,
   `revoked` tinyint(1) NOT NULL,
@@ -348,8 +348,8 @@ DROP TABLE IF EXISTS `oauth_refresh_tokens`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `oauth_refresh_tokens` (
-  `id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `access_token_id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `access_token_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `revoked` tinyint(1) NOT NULL,
   `expires_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -375,12 +375,12 @@ DROP TABLE IF EXISTS `opcions`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `opcions` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `enunciado` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `enunciado` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `correcto` tinyint(1) NOT NULL,
-  `letra` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `letra` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `existe` tinyint(1) NOT NULL DEFAULT '1',
-  `letraPregunta` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `correctoPregunta` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `letraPregunta` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `correctoPregunta` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `pregunta_id` bigint unsigned DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -408,8 +408,8 @@ DROP TABLE IF EXISTS `password_resets`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `password_resets` (
-  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   KEY `password_resets_email_index` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -433,9 +433,9 @@ DROP TABLE IF EXISTS `preguntas`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `preguntas` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `titulo` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'titulo de pregunta',
-  `photo` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `enunciado` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `titulo` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'titulo de pregunta',
+  `photo` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `enunciado` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `cuestionario_id` bigint unsigned DEFAULT NULL,
   `valor` int NOT NULL,
   `existe` tinyint(1) NOT NULL DEFAULT '1',
@@ -474,7 +474,7 @@ CREATE TABLE `respuestas` (
   `cuestionario_id` bigint unsigned DEFAULT NULL,
   `puntaje` int NOT NULL,
   `existe` tinyint(1) NOT NULL DEFAULT '1',
-  `grupoPregunta` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `grupoPregunta` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp(6) NULL DEFAULT NULL,
   `updated_at` timestamp(6) NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -508,16 +508,16 @@ DROP TABLE IF EXISTS `users`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `users` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `code` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `rol` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `code` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `rol` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `existe` tinyint(1) NOT NULL DEFAULT '1',
   `curso_id` bigint unsigned DEFAULT NULL,
   `grupo_id` bigint unsigned DEFAULT NULL,
-  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
-  `password` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `password` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `remember_token` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -548,4 +548,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-01-25 10:49:29
+-- Dump completed on 2022-01-26 18:26:19
