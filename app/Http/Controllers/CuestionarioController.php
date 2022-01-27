@@ -97,11 +97,11 @@ class CuestionarioController extends Controller
   * @return \Illuminate\Http\Response
   */
   public function show(Request $request) {
-    if (Traits::curso($request->curso_id) || Traits::superadmin()) {
-      $cuestionario = Cuestionario::with('preguntas')->with('curso')->with('area')->findOrFail($request->id);
+    $cuestionario = Cuestionario::with('preguntas')->with('curso')->with('area')->findOrFail($request->id);
+    if (Traits::curso($cuestionario->curso_id) || Traits::superadmin()) {
       return $cuestionario;
     } else {
-      return Traits::error('Solo puedes ver este cuestionario si está asignado a tu curso o si eres administrador', 400);
+      return Traits::error('Solo puedes ver este cuestionario si está asignado a tu curso o si eres administrador ' .  $request->curso_id , 400);
     }
 
   }

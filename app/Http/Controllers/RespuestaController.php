@@ -79,10 +79,10 @@ class RespuestaController extends Controller
 
       $respuesta = new respuesta();
       $respuesta->cuestionario_id = Pregunta::findOrFail($request->pregunta_id)->cuestionario_id;
-      if ((Opcion::findOrFail($request->opcion_id)->correcto) == true) {
+      if (Opcion::findOrFail($request->opcion_id)->correcto === 1) {
         $respuesta->puntaje = Pregunta::findOrFail($request->pregunta_id)->valor;
 
-        if (!Respuesta::where('opcion_id', '=', $request->opcion_id)->exists()) {
+        if (!Respuesta::where('opcion_id', '=', $request->opcion_id)->where('pregunta_id', '=', $request->pregunta_id)->exists()) {
           $respuesta->puntaje = $respuesta->puntaje * 1.5;
 
         };
@@ -94,13 +94,12 @@ class RespuestaController extends Controller
       $respuesta->pregunta_id = $request->pregunta_id;
       $respuesta->grupoPregunta = $request->grupoPregunta;
       $respuesta->grupo_id = $request->grupo_id;
-      $respuesta->puntaje = Pregunta::findOrFail($request->pregunta_id)->valor;
 
       $respuesta->save();
 
       return response()->json([
         'res' => true,
-        'message' => 'Registro creado correctamente'
+        'message' => 'Registro creado correctamente ' . (Opcion::findOrFail($request->opcion_id)->correcto)
       ], 200);
     } else {
       return Traits::error('Si no es admin solo puede ver responder a preguntas de su curso', 400);
