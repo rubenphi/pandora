@@ -62,6 +62,9 @@ Route::group(['middleware' => 'auth:api'], function() {
   Route::get('/preguntas/cuestionario/{id}', [PreguntaController::class, 'preguntasByCuestionario']); //muestra un los registro
   Route::post('/preguntas', [PreguntaController::class, 'store']); // crea un registro
   Route::post('/preguntas/update/{id}', [PreguntaController::class, 'update']); // actualiza un registro
+
+  Route::post('/preguntas/import/{a}/{b}', [PreguntaController::class, 'importPreguntas']); // actualiza un registro
+ 
   Route::delete('/preguntas/{id}', [PreguntaController::class, 'destroy']); //elimina un registro
 
   Route::get('/cuestionarios', [CuestionarioController::class, 'index']); //muestra todos los registros
