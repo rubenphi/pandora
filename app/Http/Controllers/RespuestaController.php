@@ -73,7 +73,8 @@ class RespuestaController extends Controller
   */
   public function store(CreateRespuestaRequest $request) {
     $curso_id = Traits::verCurso($request->pregunta_id, 'pregunta');
-    if (Traits::curso($curso_id) || Traits::superadmin()) {
+
+    if (( Traits::curso($curso_id) && Pregunta::findOrFail($request->pregunta_id)->disponible == 1   )|| Traits::superadmin()) {
       Arr::set($request, 'grupoPregunta', $request->grupo_id . '-' . $request->pregunta_id);
       $request->validate(['grupoPregunta' => ['unique:respuestas,grupoPregunta']]);
 
@@ -106,7 +107,7 @@ class RespuestaController extends Controller
     }
 
 
-
+  
   }
 
   /**
