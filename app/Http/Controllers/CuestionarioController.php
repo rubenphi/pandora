@@ -39,7 +39,7 @@ class CuestionarioController extends Controller
 
 
   public function cuestionariosByCursoAndArea(Request $request) {
-    if (Traits::curso($request->id) || Traits::superadmin()) {
+    if (Traits::curso($request->curso) || Traits::superadmin()) {
       $cuestionarios = Cuestionario::where('curso_id', $request->curso)->where('area_id', $request->area)->where('existe', 1)->with('curso')->with('area')->get();
       return $cuestionarios;
     } else {

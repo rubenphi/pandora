@@ -14,7 +14,7 @@ class CreateGruposTable extends Migration
   public function up() {
     Schema::create('grupos', function (Blueprint $table) {
       $table->id();
-      $table->string('nombre')->unique();
+      $table->string('nombre');
       $table->foreignId('curso_id')->nullable()->references('id')->on('cursos')->cascadeOnUpdate()->nullOnDelete();
       $table->timestamps();
     });
