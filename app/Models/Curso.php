@@ -26,7 +26,7 @@ class Curso extends Model
   public function areas()
 {
 
-    return $this->belongsToMany(Area::class, 'area_cursos', 'curso_id', 'area_id');
+    return $this->belongsToMany(Area::class, 'area_cursos', 'curso_id', 'area_id')->withPivot('id');
 }
 
 }

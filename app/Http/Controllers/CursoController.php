@@ -98,6 +98,21 @@ class CursoController extends Controller
 
   }
 
+
+  public function deleteArea(Request $request) {
+    if (Traits::superadmin()) {
+      $area_curso = AreaCurso::destroy($request->id);
+      return response()->json([
+        'res' => true,
+        'message' => 'Registro creado correctamente'
+      ], 200);
+    } else {
+      return Traits::error('Solo el administrador puede añadir areas a cursos', 400);
+    }
+
+
+  }
+
   /**
   * Display the specified resource.
   *

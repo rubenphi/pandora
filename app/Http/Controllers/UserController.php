@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 use App\Models\User;
+use App\Models\Grupo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\LoginRequest;
@@ -41,7 +42,8 @@ class UserController extends Controller
   }
     
   public function usersByGrupo(Request $request) {
-    if (Traits::curso($request->id) || Traits::superadmin()) {
+    $grupo = Grupo::whereId($request->id)->first();
+    if (Traits::curso($grupo->curso_id) || Traits::superadmin()) {
       $users = User::where('grupo_id', $request->id)->with('grupo')->get();
       return $users;
     } else {

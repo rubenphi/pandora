@@ -56,6 +56,7 @@ Route::group(['middleware' => 'auth:api'], function() {
   Route::delete('/cursos/{id}', [CursoController::class, 'destroy']); //elimina un registro
   Route::post('/cursos/add/area', [CursoController::class, 'addArea']); // crea un registro
   Route::put('/cursos/update/area/{id}', [CursoController::class, 'updateArea']); // actualiza un registro
+  Route::delete('/cursos/delete/area/{id}', [CursoController::class, 'deleteArea']); // elimina un registro
 
   Route::get('/preguntas', [PreguntaController::class, 'index']); //muestra todos los registros
   Route::get('/preguntas/{id}', [PreguntaController::class, 'show']); //muestra un los registro
