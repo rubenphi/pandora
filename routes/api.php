@@ -87,6 +87,7 @@ Route::group(['middleware' => 'auth:api'], function() {
   Route::get('/respuestas/cuestionario/{id}', [RespuestaController::class, 'respuestasByCuestionario']); //elimina un registro
   Route::get('/respuestas/resultado/{id}', [RespuestaController::class, 'respuestasByCuestionarioSum']); //elimina un registro
   Route::get('/respuestas/pregunta/{id}', [RespuestaController::class, 'respuestasByPregunta']); //elimina un registro
+  Route::post('/respuestas/bonus/pregunta/{id}', [RespuestaController::class, 'bonus']); //elimina un registro
   Route::get('/respuestas/{id}', [RespuestaController::class, 'show']); //elimina un registro
   Route::post('/respuestas', [RespuestaController::class, 'store']); //elimina un registro
   Route::put('/respuestas/{id}', [RespuestaController::class, 'update']); //elimina un registro

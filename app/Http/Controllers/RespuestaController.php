@@ -71,6 +71,31 @@ class RespuestaController extends Controller
   * @param  \Illuminate\Http\Request  $request
   * @return \Illuminate\Http\Response
   */
+
+
+  public function bonus(Request $request) {
+
+     $opcion = Opcion::where('pregunta_id', $request->id)->where('correcto', 1)->first();
+
+     $pregunta = Pregunta::findOrFail($request->id);
+     
+     $respuesta = Respuesta::where('pregunta_id', $request->id)->where('opcion_id', $opcion->id)->first();
+
+     $respuesta->puntaje = $pregunta->valor * 1.5; 
+     $pregunta->disponible = 0;
+
+     $pregunta->save();
+     $respuesta->save();
+     
+     return response()->json([
+      'res' => true,
+      'message' => 'Registro creado correctamente '
+    ], 200);
+
+  }
+
+
+
   public function store(CreateRespuestaRequest $request) {
     $curso_id = Traits::verCurso($request->pregunta_id, 'pregunta');
 
@@ -84,10 +109,6 @@ class RespuestaController extends Controller
       if (Opcion::findOrFail($request->opcion_id)->correcto === 1) {
         $respuesta->puntaje = Pregunta::findOrFail($request->pregunta_id)->valor;
       
-        if (!Respuesta::where('opcion_id', '=', $request->opcion_id)->where('pregunta_id', '=', $request->pregunta_id)->exists()) {
-          $respuesta->puntaje = $respuesta->puntaje * 1.5;
-
-        };
       } else {
         $respuesta->puntaje = 0;
       };
@@ -101,7 +122,7 @@ class RespuestaController extends Controller
 
       return response()->json([
         'res' => true,
-        'message' => 'Registro creado correctamente ' . (Opcion::findOrFail($request->opcion_id)->correcto)
+        'message' => 'Registro creado correctamente '
       ], 200);
     } else {
       return Traits::error('Si no es admin solo puede ver responder a preguntas de su curso', 400);
