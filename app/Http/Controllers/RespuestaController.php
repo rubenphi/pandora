@@ -75,6 +75,7 @@ class RespuestaController extends Controller
 
   public function bonus(Request $request) {
 
+    if (Traits::superadmin()) {
      $opcion = Opcion::where('pregunta_id', $request->id)->where('correcto', 1)->first();
 
      $pregunta = Pregunta::findOrFail($request->id);
@@ -91,6 +92,10 @@ class RespuestaController extends Controller
       'res' => true,
       'message' => 'Registro creado correctamente '
     ], 200);
+  }
+  else {
+    return Traits::error('Si no es admin no puede añadir bonus a la respuesta', 400);
+  }
 
   }
 
