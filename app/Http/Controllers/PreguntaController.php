@@ -105,6 +105,7 @@ class PreguntaController extends Controller
   $preguntas = $this->preguntasByCuestionario($a);
     foreach ($preguntas as $pregunta){
       $datos = new Pregunta();
+      $datos->photo = $pregunta->photo;
       $datos->titulo = $pregunta->titulo;
       $datos->enunciado = $pregunta->enunciado;
       $datos->cuestionario_id = $b->id;
