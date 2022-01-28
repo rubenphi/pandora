@@ -80,9 +80,10 @@ class RespuestaController extends Controller
 
       $respuesta = new respuesta();
       $respuesta->cuestionario_id = Pregunta::findOrFail($request->pregunta_id)->cuestionario_id;
+    
       if (Opcion::findOrFail($request->opcion_id)->correcto === 1) {
         $respuesta->puntaje = Pregunta::findOrFail($request->pregunta_id)->valor;
-
+      
         if (!Respuesta::where('opcion_id', '=', $request->opcion_id)->where('pregunta_id', '=', $request->pregunta_id)->exists()) {
           $respuesta->puntaje = $respuesta->puntaje * 1.5;
 
