@@ -110,8 +110,8 @@ class PreguntaController extends Controller
       $datos->enunciado = $pregunta->enunciado;
       $datos->cuestionario_id = $b->id;
       $datos->valor = $pregunta->valor;
-      $datos->visible = $pregunta->visible;
-      $datos->disponible = $pregunta->disponible;
+      $datos->visible = 0;
+      $datos->disponible = 0;
       $datos->existe = $pregunta->existe;
       $datos->save();
       $opciones = Opcion::where('pregunta_id', $pregunta->id)->get();
