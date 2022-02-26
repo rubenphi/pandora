@@ -33,6 +33,29 @@ class OpcionController extends Controller
 
   }
 
+  public function importOpciones(Request $request){
+    
+    $request->id= intval($request->a);
+    $request->b = intval($request->b);
+    $a = new Request();
+    $a->id = intval($request->a);
+    $b = new Request();
+    $b->id = intval($request->b);
+
+  $opciones = $this->opcionesByPregunta($a);
+  foreach ($opciones as $opcion){
+    $dat = new Opcion();
+    $dat->enunciado = $opcion->enunciado;
+    $dat->correcto = $opcion->correcto;
+    $dat->letra = $opcion->letra;
+    $dat->pregunta_id = $b->id;
+    $dat->letraPregunta = $opcion->letra . "-" . $b->id;
+    $dat->correctoPregunta = "0" . "-" . $b->id;
+    $dat->save();
+  } 
+    return "proceso finalizado";
+  }
+
   /**
   * Show the form for creating a new resource.
   *

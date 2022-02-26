@@ -80,6 +80,7 @@ Route::group(['middleware' => 'auth:api'], function() {
   Route::get('/opciones/{id}', [OpcionController::class, 'show']); //muestra un los registro
   Route::get('/opciones/pregunta/{id}', [OpcionController::class, 'opcionesByPregunta']); //muestra un los registro
   Route::post('/opciones', [OpcionController::class, 'store']); // crea un registro
+  Route::post('/opciones/import/{a}/{b}', [OpcionController::class, 'importOpciones']); // importa opciones
   Route::put('/opciones/{id}', [OpcionController::class, 'update']); // actualiza un registro
   Route::delete('/opciones/{id}', [OpcionController::class, 'destroy']); //elimina un registro
 
