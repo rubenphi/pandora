@@ -22,7 +22,7 @@ class OpcionController extends Controller
   }
 
   public function opcionesByPregunta(Request $request) {
-    $curso_id = Traits::verCurso($request->id, 'pregunta')->where('existe', 1);
+    $curso_id = Traits::verCurso($request->id, 'pregunta');
 
     if (Traits::curso($curso_id) || Traits::superadmin()) {
       $opciones = Opcion::where('pregunta_id', $request->id)->get();
