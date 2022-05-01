@@ -64,7 +64,9 @@ Route::group(['middleware' => 'auth:api'], function() {
   Route::post('/preguntas', [PreguntaController::class, 'store']); // crea un registro
   Route::post('/preguntas/update/{id}', [PreguntaController::class, 'update']); // actualiza un registro
 
-  Route::post('/preguntas/import/{a}/{b}', [PreguntaController::class, 'importPreguntas']); // actualiza un registro
+  Route::post('/preguntas/import/from/{a}/to/{b}', [PreguntaController::class, 'importPreguntasByCuestionario']); // actualiza un registro
+
+  Route::post('/preguntas/import/to/{a}', [PreguntaController::class, 'importPreguntas']); // actualiza un registro
  
   Route::delete('/preguntas/{id}', [PreguntaController::class, 'destroy']); //elimina un registro
 

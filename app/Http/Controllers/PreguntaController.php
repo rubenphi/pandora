@@ -94,6 +94,33 @@ class PreguntaController extends Controller
   }
 
   public function importPreguntas(Request $request){
+    $preguntas = Pregunta::with('cuestionario')->with('opciones')->findMany($request->preguntas);
+    foreach ($preguntas as $pregunta){
+      $datos = new Pregunta();
+      $datos->photo = $pregunta->photo;
+      $datos->titulo = $pregunta->titulo;
+      $datos->enunciado = $pregunta->enunciado;
+      $datos->cuestionario_id = $b->id;
+      $datos->valor = $pregunta->valor;
+      $datos->visible = 0;
+      $datos->disponible = 0;
+      $datos->existe = $pregunta->existe;
+      $datos->save();
+      $opciones = Opcion::where('pregunta_id', $pregunta->id)->get();
+      foreach ($opciones as $opcion){
+        $dat = new Opcion();
+        $dat->enunciado = $opcion->enunciado;
+        $dat->correcto = $opcion->correcto;
+        $dat->letra = $opcion->letra;
+        $dat->pregunta_id = $datos->id;
+        $dat->letraPregunta = $opcion->letra . "-" . $datos->id;
+        $dat->correctoPregunta = $opcion->correcto . "-" . $datos->id;
+        $dat->save();
+      } 
+    }
+    return "proceso finalizado";
+  }
+  public function importPreguntasByCuestionario(Request $request){
     
     $request->id= intval($request->a);
     $request->b = intval($request->b);
