@@ -94,6 +94,8 @@ class PreguntaController extends Controller
   }
 
   public function importPreguntas(Request $request){
+
+    /*
     $preguntas = Pregunta::whereIn('id', $request->preguntas)->with('cuestionario')->with('opciones')->find($request->preguntas)->get();;
     foreach ($preguntas as $pregunta){
       $datos = new Pregunta();
@@ -118,6 +120,7 @@ class PreguntaController extends Controller
         $dat->save();
       } 
     }
+    */
     return $request->preguntas;
   }
   public function importPreguntasByCuestionario(Request $request){
