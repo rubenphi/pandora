@@ -118,7 +118,7 @@ class PreguntaController extends Controller
         $dat->save();
       } 
     }
-    return "proceso finalizado";
+    return $preguntas;
   }
   public function importPreguntasByCuestionario(Request $request){
     
