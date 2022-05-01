@@ -94,9 +94,7 @@ class PreguntaController extends Controller
   }
 
   public function importPreguntas(Request $request){
-
-    /*
-    $preguntas = Pregunta::whereIn('id', $request->preguntas)->with('cuestionario')->with('opciones')->find($request->preguntas)->get();;
+    $preguntas = Pregunta::with('cuestionario')->with('opciones')->findMany($request->preguntas);
     foreach ($preguntas as $pregunta){
       $datos = new Pregunta();
       $datos->photo = $pregunta->photo;
@@ -120,8 +118,7 @@ class PreguntaController extends Controller
         $dat->save();
       } 
     }
-    */
-    return $request->preguntas;
+    return $preguntas;
   }
   public function importPreguntasByCuestionario(Request $request){
     
