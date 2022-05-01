@@ -100,7 +100,7 @@ class PreguntaController extends Controller
       $datos->photo = $pregunta->photo;
       $datos->titulo = $pregunta->titulo;
       $datos->enunciado = $pregunta->enunciado;
-      $datos->cuestionario_id = $b->id;
+      $datos->cuestionario_id = $request->id;
       $datos->valor = $pregunta->valor;
       $datos->visible = 0;
       $datos->disponible = 0;
