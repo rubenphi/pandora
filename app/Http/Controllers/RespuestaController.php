@@ -115,7 +115,7 @@ class RespuestaController extends Controller
         $respuesta->puntaje = Pregunta::findOrFail($request->pregunta_id)->valor;
       
       } else {
-        $respuesta->puntaje = 0;
+        $respuesta->puntaje = -(Pregunta::findOrFail($request->pregunta_id)->valor);
       };
       $respuesta->existe = $request->existe;
       $respuesta->opcion_id = $request->opcion_id;

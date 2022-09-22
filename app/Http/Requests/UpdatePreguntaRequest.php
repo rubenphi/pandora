@@ -27,7 +27,9 @@ class UpdatePreguntaRequest extends FormRequest
       'cuestionario_id' => 'required',
       'valor' => 'required',
       'visible' => 'required',
-      'disponible' => 'required'
+      'disponible' => 'required',
+      'tiempo' => 'required',
+      'revelada' => 'required'
     ];
   }
 }

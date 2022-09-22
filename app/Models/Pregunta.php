@@ -15,8 +15,14 @@ class Pregunta extends Model
     'cuestionario_id',
     'valor',
     'visible',
-    'disponible'
+    'disponible',
+    'revelada',
+    'tiempo'
   ];
+
+  protected $attributes = [
+    'revelada' => false,
+];
 
   public function opciones() {
     return $this->hasMany(Opcion::class)->orderBy('letra','asc')->where('existe', '=' , 1);

@@ -79,6 +79,8 @@ class PreguntaController extends Controller
       $pregunta->valor = $request->valor;
       $pregunta->visible = $request->visible;
       $pregunta->disponible = $request->disponible;
+      $pregunta->revelada = $request->revelada;
+      $pregunta->tiempo = $request->tiempo;
 
 
       $pregunta->save();
@@ -104,6 +106,8 @@ class PreguntaController extends Controller
       $datos->valor = $pregunta->valor;
       $datos->visible = 0;
       $datos->disponible = 0;
+      $datos->revelada = 0;
+      $datos->tiempo = $pregunta->tiempo;
       $datos->existe = $pregunta->existe;
       $datos->save();
       $opciones = Opcion::where('pregunta_id', $pregunta->id)->get();
@@ -139,6 +143,8 @@ class PreguntaController extends Controller
       $datos->valor = $pregunta->valor;
       $datos->visible = 0;
       $datos->disponible = 0;
+      $datos->revelada = 0;
+      $datos->tiempo = 15;
       $datos->existe = $pregunta->existe;
       $datos->save();
       $opciones = Opcion::where('pregunta_id', $pregunta->id)->get();
@@ -207,6 +213,8 @@ class PreguntaController extends Controller
       $pregunta->cuestionario_id = $request->cuestionario_id;
       $pregunta->valor = $request->valor;
       $pregunta->disponible = $request->disponible;
+      $pregunta->revelada = $request->revelada;
+      $pregunta->tiempo = $request->tiempo;
       $pregunta->visible = $request->visible;
      
   
