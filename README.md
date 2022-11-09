@@ -64,5 +64,5 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 "# apirest_crud_laravel8" 
 =======
 # pandora
-proyecto de plataforma de interacción académica
+Pandora es una app de cuestionarios creada como parte de un proyecto personal; Su objetivo es permitir, a profesores y estudiantes, tener una clase dinámica a través de juegos de trivia con preguntas diseñadas por el docente.
 >>>>>>> 167c588fb9cae4ad95339c175ae8af535a31b866
